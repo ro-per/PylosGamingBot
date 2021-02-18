@@ -9,33 +9,33 @@ import be.kuleuven.pylos.player.PylosPlayerType;
  */
 public class PlayerFactoryStudent extends PylosPlayerFactory {
 
-	public PlayerFactoryStudent() {
-		super("Student");
-	}
+    public PlayerFactoryStudent() {
+        super("Student");
+    }
 
-	@Override
-	protected void createTypes() {
+    @Override
+    protected void createTypes() {
 
-		/* example */
-		add(new PylosPlayerType("Student") {
-			@Override
-			public PylosPlayer create() {
-				return new StudentPlayer();
-			}
-		});
+        /* example */
+        add(new PylosPlayerType("Student") {
+            @Override
+            public PylosPlayer create() {
+                return new StudentPlayer();
+            }
+        });
 
-		add(new PylosPlayerType("Student - Random") {
-			@Override
-			public PylosPlayer create() {
-				return new StudentPlayerRandomFit();
-			}
-		});
+        add(new PylosPlayerType("Student - Random") {
+            @Override
+            public PylosPlayer create() {
+                return new StudentPlayerRandomFit();
+            }
+        });
 
-		add(new PylosPlayerType("Student - Best Fit") {
-			@Override
-			public PylosPlayer create() {
-				return new StudentPlayerBestFit();
-			}
-		});
-	}
+        add(new PylosPlayerType("Student - Best Fit") {
+            @Override
+            public PylosPlayer create() {
+                return new StudentPlayerBestFit();
+            }
+        });
+    }
 }

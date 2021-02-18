@@ -35,8 +35,8 @@ public class PylosScene {
 	private static final int LIN_TRANSITION_LOCATION = 300;
 	private static final int IDLE_DURATION = 100;
 	public static final double SPHERE_RADIUS = 200;
-//	public static final Color COLOR_BOARD = Color.WHITESMOKE.darker();
-	public static final Color COLOR_BOARD = Color.WHITESMOKE;
+//	public static final Color COLOR_BOARD = Color.WHITESMOKE;
+	public static final Color COLOR_BOARD = Color.WHITESMOKE.darker();
 	public static final Color COLOR_PLAYER_WHITE = Color.BEIGE;
 	public static final Color COLOR_PLAYER_WHITE_HOVER = Color.BEIGE.darker();
 	public static final Color COLOR_PLAYER_WHITE_HOVER_NOK = Color.RED.brighter();

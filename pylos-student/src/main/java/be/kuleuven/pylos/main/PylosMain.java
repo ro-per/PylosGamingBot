@@ -6,10 +6,7 @@ import be.kuleuven.pylos.game.PylosGame;
 import be.kuleuven.pylos.game.PylosGameObserver;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.PylosPlayerObserver;
-import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
-import be.kuleuven.pylos.player.codes.PylosPlayerMiniMax;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
-import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 
 import java.util.Random;
@@ -37,18 +34,17 @@ public class PylosMain {
     }
 
     public void startBattle(int i) throws Exception {
-        PylosPlayer playerLight = new PylosPlayerRandomFit();
+        PylosPlayer playerLight = new StudentPlayerRandomFit();
         PylosPlayer playerDark = new PylosPlayerRandomFit();
 
         Battle.play(playerLight, playerDark, i);
     }
 
     public static void main(String[] args) throws Exception {
-
         /* TODO !!! vm argument !!! -ea */
 
         if (args[0].equals("-1")) new PylosMain().startSingleGame();
-        else new PylosMain().startBattle(Integer.parseInt(args[0]));
+        else new PylosMain().startBattle(1000);
 
         // wie dat er start verliest bij 2 randoms
 

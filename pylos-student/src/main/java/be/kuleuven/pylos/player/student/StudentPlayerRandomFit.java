@@ -1,10 +1,13 @@
 package be.kuleuven.pylos.player.student;
 
-import be.kuleuven.pylos.game.*;
+import be.kuleuven.pylos.game.PylosBoard;
+import be.kuleuven.pylos.game.PylosGameIF;
+import be.kuleuven.pylos.game.PylosLocation;
+import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
-import com.sun.nio.sctp.PeerAddressChangeNotification;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -16,31 +19,24 @@ public class StudentPlayerRandomFit extends PylosPlayer {
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) throws Exception {
+        // Init arraylist
+        ArrayList<PylosLocation> possibleLocations = new ArrayList<>(30);
+        //Add all 30 locations of the board in the arraylist
+        Collections.addAll(possibleLocations, board.getLocations());
+        // Remove unusable locations
+        possibleLocations.removeIf(pl -> !pl.isUsable());
 
-        //1. Find Place (safe spot & free spot)
-        PylosLocation[] mogelijkPlekkenSpeler = board.getLocations();
-        ArrayList<PylosLocation> vrijePlaatsen = new ArrayList<>();
-        for (int i = 0; i < mogelijkPlekkenSpeler.length; i++) {
-            PylosLocation currentLocation = mogelijkPlekkenSpeler[i];
-
-            if (currentLocation.isUsable()) {
-                vrijePlaatsen.add(currentLocation);
-            }
-        }
-
-        if (vrijePlaatsen.isEmpty()) {
-            throw new Exception("Geen vrije plaatsen gevonden, andere speler wint");
+        if (!possibleLocations.isEmpty()) {
+            // Get random location from possibilities
+            int rand = RANDOM.nextInt(possibleLocations.size());
+            PylosLocation toLocation = possibleLocations.get(rand);
+            // Get a reserve sphere
+            PylosSphere reserveSphere = board.getReserve(this);
+            // Move the sphere
+            game.moveSphere(reserveSphere, toLocation);
         } else {
-            //2. Verplaats
-            PylosSphere nieuweBol = board.getReserve(this);
-
-            int max = vrijePlaatsen.size() - 1;
-            int min = 0;
-            int randomGetal = RANDOM.nextInt(max - min + 1) + min;
-            //nieuweBol.canMoveTo(vrijePlaatsen.get(randomGetal));
-            game.moveSphere(nieuweBol, vrijePlaatsen.get(randomGetal));
+            throw new Exception("Geen vrije plaatsen gevonden, andere speler wint");
         }
-
     }
 
     @Override
@@ -77,7 +73,7 @@ public class StudentPlayerRandomFit extends PylosPlayer {
         double temp = RANDOM.nextDouble();
         System.out.println(temp);
 
-        if (temp < 0.00001) {
+        if (temp < 0.50) {
             game.pass();
         } else {
             doRemove(game, board);
