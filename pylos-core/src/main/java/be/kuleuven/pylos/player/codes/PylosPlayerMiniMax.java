@@ -516,7 +516,7 @@ public class PylosPlayerMiniMax extends PylosPlayer {
 		return result;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Battle.play(new PylosPlayerMiniMax(), new PylosPlayerBestFit(), 50);
 	}
 }

@@ -9,7 +9,7 @@ import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
  */
 public class BattleMain {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception {
 		Battle.play(new PylosPlayerRandomFit(), new PylosPlayerRandomFit(), 100);
 	}
 

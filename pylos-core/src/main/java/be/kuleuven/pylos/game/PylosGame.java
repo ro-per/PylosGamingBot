@@ -56,7 +56,7 @@ public class PylosGame implements PylosGameIF {
 
 	/* public methods --------------------------------------------------------------------------------------------- */
 
-	public void play() {
+	public void play() throws Exception {
 		while (!isFinished()) {
 			doStep();
 		}
@@ -177,7 +177,7 @@ public class PylosGame implements PylosGameIF {
 
 	/* private methods -------------------------------------------------------------------------------------------- */
 
-	private void doStep() {
+	private void doStep() throws Exception {
 		PylosPlayer cPlayer = currentPlayer;
 		switch (currentState) {
 			case MOVE:

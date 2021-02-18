@@ -23,7 +23,7 @@ public class PylosMain {
 
 	}
 
-	public void startSingleGame(){
+	public void startSingleGame() throws Exception {
 
 		Random random = new Random(0);
 
@@ -36,14 +36,14 @@ public class PylosMain {
 		pylosGame.play();
 	}
 
-	public void startBattle(){
+	public void startBattle() throws Exception {
 		PylosPlayer playerLight = new PylosPlayerBestFit();
 		PylosPlayer playerDark = new StudentPlayerBestFit();
 
 		Battle.play(playerLight, playerDark, 100);
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception {
 
 		/* TODO !!! vm argument !!! -ea */
 

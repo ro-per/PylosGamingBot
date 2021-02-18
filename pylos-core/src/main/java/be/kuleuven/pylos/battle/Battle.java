@@ -12,11 +12,11 @@ public class Battle {
 
 	private static final Random random = new Random(0);
 
-	public static double[] play(PylosPlayer playerLight, PylosPlayer playerDark, int runs) {
+	public static double[] play(PylosPlayer playerLight, PylosPlayer playerDark, int runs) throws Exception {
 		return play(playerLight, playerDark, runs, true);
 	}
 
-	public static double[] play(PylosPlayer playerLight, PylosPlayer playerDark, int runs, boolean print) {
+	public static double[] play(PylosPlayer playerLight, PylosPlayer playerDark, int runs, boolean print) throws Exception {
 
 		if (runs % 2 != 0) {
 			throw new IllegalArgumentException("Please specify an even number of runs");
