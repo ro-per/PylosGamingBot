@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class StudentPlayerBestFit extends PylosPlayer{
+public class StudentPlayerBestFit extends PylosPlayer {
 
     private PylosLocation lastPylosLocation;
 
@@ -63,7 +63,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
         return Collections.max(locations, new Comparator<PylosLocation>() {
             @Override
             public int compare(PylosLocation o1, PylosLocation o2) {
-                return Integer.compare(getMaxInSquare(o1,player), getMaxInSquare(o2,player));
+                return Integer.compare(getMaxInSquare(o1, player), getMaxInSquare(o2, player));
             }
         });
     }
@@ -75,8 +75,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
             if (newMax > maxInSquare) {
                 if (bs.getInSquare(player.OTHER) > 0) {
                     continue;
-                }
-                else {
+                } else {
                     maxInSquare = newMax;
                 }
             }
@@ -90,7 +89,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
             public int compare(PylosLocation o1, PylosLocation o2) {
                 int compZ = Integer.compare(o1.Z, o2.Z);
                 if (compZ != 0) return compZ;
-                return Integer.compare(getMaxInSquare(o1,player), getMaxInSquare(o2,player));
+                return Integer.compare(getMaxInSquare(o1, player), getMaxInSquare(o2, player));
             }
         });
     }
@@ -101,7 +100,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
             public int compare(PylosLocation o1, PylosLocation o2) {
                 int compZ = -Integer.compare(o1.Z, o2.Z);
                 if (compZ != 0) return compZ;
-                return -Integer.compare(getMaxInSquare(o1,player), getMaxInSquare(o2,player));
+                return -Integer.compare(getMaxInSquare(o1, player), getMaxInSquare(o2, player));
             }
         });
     }
@@ -117,7 +116,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
             PylosSphere sphere = Collections.min(movableSpheres, new Comparator<PylosSphere>() {
                 @Override
                 public int compare(PylosSphere o1, PylosSphere o2) {
-                    return Integer.compare(getMaxInSquare(o1.getLocation(),StudentPlayerBestFit.this), getMaxInSquare(o2.getLocation(),StudentPlayerBestFit.this));
+                    return Integer.compare(getMaxInSquare(o1.getLocation(), StudentPlayerBestFit.this), getMaxInSquare(o2.getLocation(), StudentPlayerBestFit.this));
                 }
             });
             return sphere;
@@ -151,7 +150,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
             PylosSphere sphere = Collections.min(removableSpheres, new Comparator<PylosSphere>() {
                 @Override
                 public int compare(PylosSphere o1, PylosSphere o2) {
-                    return Integer.compare(getMaxInSquare(o1.getLocation(),StudentPlayerBestFit.this), getMaxInSquare(o2.getLocation(),StudentPlayerBestFit.this));
+                    return Integer.compare(getMaxInSquare(o1.getLocation(), StudentPlayerBestFit.this), getMaxInSquare(o2.getLocation(), StudentPlayerBestFit.this));
                 }
             });
             game.removeSphere(sphere);
