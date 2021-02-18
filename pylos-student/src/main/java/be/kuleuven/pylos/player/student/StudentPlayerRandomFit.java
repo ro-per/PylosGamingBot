@@ -68,7 +68,7 @@ public class StudentPlayerRandomFit extends PylosPlayer {
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception {
 
-        if (R.nextDouble() <= 1) {
+        if (R.nextDouble() <= 0.5) {
             game.pass();
             teller_pass++;
         } else doRemove(game, board);
