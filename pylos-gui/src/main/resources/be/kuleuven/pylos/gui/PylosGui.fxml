@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
 <?import javafx.geometry.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.pylos.gui.PylosGuiController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.pylos.gui.PylosGuiController">
    <children>
       <!--<TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Log">-->
          <!--<content>-->
@@ -44,10 +40,20 @@
          <children>
             <VBox spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.2);" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <ComboBox fx:id="cbPlayerLight" focusTraversable="false" maxWidth="1.7976931348623157E308" />
-                  <ProgressBar fx:id="pbReservesLight" maxWidth="1.7976931348623157E308" minHeight="10.0" prefHeight="10.0" progress="0.0" />
-                  <ComboBox fx:id="cbPlayerDark" focusTraversable="false" maxWidth="1.7976931348623157E308" />
-                  <ProgressBar fx:id="pbReservesDark" maxWidth="1.7976931348623157E308" minHeight="10.0" prefHeight="10.0" progress="0.0" />
+                  <VBox style="-fx-background-color: white;">
+                     <children>
+                        <Label maxWidth="1.7976931348623157E308" text="Player Light:" />
+                        <ComboBox fx:id="cbPlayerLight" focusTraversable="false" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparant;" />
+                        <ProgressBar fx:id="pbReservesLight" maxWidth="1.7976931348623157E308" minHeight="10.0" prefHeight="10.0" progress="0.0" />
+                     </children>
+                  </VBox>
+                  <VBox style="-fx-background-color: dimgrey;">
+                     <children>
+                        <Label maxWidth="1.7976931348623157E308" text="Player Dark" textFill="WHITE" />
+                        <ComboBox fx:id="cbPlayerDark" focusTraversable="false" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparant;" />
+                        <ProgressBar fx:id="pbReservesDark" maxWidth="1.7976931348623157E308" minHeight="10.0" prefHeight="10.0" progress="0.0" />
+                     </children>
+                  </VBox>
                   <HBox spacing="2.0">
                      <children>
                         <Button fx:id="btnStart" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startGame" text="Start" HBox.hgrow="ALWAYS" />

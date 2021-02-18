@@ -167,6 +167,6 @@ public class PylosSphere3D extends Sphere {
 	}
 
 	private static PhongMaterial createWoodMaterial(Color color) {
-		return new PhongMaterial(color, Material.load("Wood4.jpg"), null, null, null);
+		return new PhongMaterial(color, Material.load("Wood3.jpg"), null, null, null);
 	}
 }

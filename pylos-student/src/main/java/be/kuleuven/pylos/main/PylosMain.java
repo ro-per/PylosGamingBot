@@ -36,19 +36,22 @@ public class PylosMain {
         pylosGame.play();
     }
 
-    public void startBattle() throws Exception {
-        PylosPlayer playerLight = new PylosPlayerBestFit();
-        PylosPlayer playerDark = new StudentPlayerBestFit();
+    public void startBattle(int i) throws Exception {
+        PylosPlayer playerLight = new PylosPlayerRandomFit();
+        PylosPlayer playerDark = new PylosPlayerRandomFit();
 
-        Battle.play(playerLight, playerDark, 100);
+        Battle.play(playerLight, playerDark, i);
     }
 
     public static void main(String[] args) throws Exception {
 
         /* TODO !!! vm argument !!! -ea */
 
-        if (args[0] == "0") new PylosMain().startSingleGame();
-        if (args[0] == "1") new PylosMain().startBattle();
+        if (args[0].equals("-1")) new PylosMain().startSingleGame();
+        else new PylosMain().startBattle(Integer.parseInt(args[0]));
+
+        // wie dat er start verliest bij 2 randoms
+
 
     }
 
