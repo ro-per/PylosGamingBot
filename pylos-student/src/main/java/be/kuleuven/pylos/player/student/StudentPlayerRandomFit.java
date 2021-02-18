@@ -16,13 +16,25 @@ public class StudentPlayerRandomFit extends PylosPlayer {
         /* TODO add a reserve sphere to a feasible random location */
 
         //1. Find Place (safe spot & free spot)
-        boolean plaatsGevonden = false;
-        while (!plaatsGevonden) {
-            PylosSquare[] possibleLocation = board.getAllSquares();
+        PylosLocation[] mogelijkPlekkenSpeler = board.getLocations();
+        ArrayList<PylosLocation> vrijePlaatsen = new ArrayList<>();
+        for (int i = 0; i < mogelijkPlekkenSpeler.length; i++) {
+            PylosLocation currentLocation = mogelijkPlekkenSpeler[i];
+            if (!currentLocation.hasAbove() & currentLocation.isUsable()){
+                vrijePlaatsen.add(currentLocation);
+            }
         }
 
-        //2. Verplaats
-
+        if (vrijePlaatsen.isEmpty()){
+            System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
+        } else {
+            //2. Verplaats
+            PylosSphere nieuweBol = board.getReserve(this);
+            Random random = new Random(123456789);
+            int max= vrijePlaatsen.size()-1;
+            int randomGetal = random.nextInt(max);
+            nieuweBol.canMoveTo(vrijePlaatsen.get(randomGetal));
+        }
 
     }
 
