@@ -23,7 +23,7 @@ public class PylosPlayerRandomFit extends PylosPlayer {
 			}
 		}
 		PylosSphere reserveSphere = board.getReserve(this);
-		PylosLocation location = allPossibleLocations.size() == 1 ? allPossibleLocations.get(0) : allPossibleLocations.get(getRandom().nextInt(allPossibleLocations.size() - 1));
+		PylosLocation location = allPossibleLocations.size() == 1 ? allPossibleLocations.get(0) : allPossibleLocations.get(getRandom().nextInt(allPossibleLocations.size()));
 		game.moveSphere(reserveSphere, location);
 	}
 
@@ -40,7 +40,7 @@ public class PylosPlayerRandomFit extends PylosPlayer {
 		if (removableSpheres.size() == 1) {
 			sphereToRemove = removableSpheres.get(0);
 		} else {
-			sphereToRemove = removableSpheres.get(getRandom().nextInt(removableSpheres.size() - 1));
+			sphereToRemove = removableSpheres.get(getRandom().nextInt(removableSpheres.size()));
 		}
 		game.removeSphere(sphereToRemove);
 	}
