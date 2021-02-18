@@ -34,8 +34,10 @@ public class StudentPlayerRandomFit extends PylosPlayer {
             PylosSphere nieuweBol = board.getReserve(this);
 
             int max = vrijePlaatsen.size() - 1;
-            int randomGetal = RANDOM.nextInt(max);
-            nieuweBol.canMoveTo(vrijePlaatsen.get(randomGetal));
+            int min = 0;
+            int randomGetal = RANDOM.nextInt(max - min +1) + min;
+            //nieuweBol.canMoveTo(vrijePlaatsen.get(randomGetal));
+            game.moveSphere(nieuweBol,vrijePlaatsen.get(randomGetal));
         }
 
     }

@@ -11,7 +11,7 @@ import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
  */
 public class TestMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		PylosPlayer bf = new PylosPlayerBestFit();
 		PylosPlayer mm2 = new PylosPlayerMiniMax(2);

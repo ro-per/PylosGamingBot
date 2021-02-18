@@ -123,7 +123,13 @@ public class PylosGuiController implements Initializable, PylosGameObserver, Pyl
 
 	public void startGame() {
 		controlsPlaying(true);
-		new Thread(() -> playGame()).start();
+		new Thread(() -> {
+			try {
+				playGame();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
 	}
 
 	public void startBattle() {
@@ -132,7 +138,11 @@ public class PylosGuiController implements Initializable, PylosGameObserver, Pyl
 			battleStop = false;
 			int n = tfBattles.getText().isEmpty() ? Integer.MAX_VALUE : new Integer(tfBattles.getText());
 			for (int i = 0; i < n && !battleStop; i++) {
-				playGame();
+				try {
+					playGame();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				resetCamera(true);
 				pylosScene.reset(true);
 				Platform.runLater(() -> {
@@ -151,7 +161,7 @@ public class PylosGuiController implements Initializable, PylosGameObserver, Pyl
 		}).start();
 	}
 
-	private void playGame() {
+	private void playGame() throws Exception {
 		/* create the game */
 		PylosPlayer playerLight = cbPlayerLight.getValue() == PylosScene.HUMAN_PLAYER_TYPE ? pylosScene.getHumanPlayer(PylosPlayerColor.LIGHT) : cbPlayerLight.getValue().create();
 		PylosPlayer playerDark = cbPlayerDark.getValue() == PylosScene.HUMAN_PLAYER_TYPE ? pylosScene.getHumanPlayer(PylosPlayerColor.DARK) : cbPlayerDark.getValue().create();
