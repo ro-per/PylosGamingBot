@@ -19,37 +19,37 @@ import java.util.Random;
  */
 public class PylosMain {
 
-	public PylosMain(){
+    public PylosMain() {
 
-	}
+    }
 
-	public void startSingleGame() throws Exception {
+    public void startSingleGame() throws Exception {
 
-		Random random = new Random(0);
+        Random random = new Random(0);
 
-		PylosPlayer randomPlayerCodes = new PylosPlayerRandomFit();
-		PylosPlayer randomPlayerStudent = new StudentPlayerRandomFit();
+        PylosPlayer randomPlayerCodes = new PylosPlayerRandomFit();
+        PylosPlayer randomPlayerStudent = new StudentPlayerRandomFit();
 
-		PylosBoard pylosBoard = new PylosBoard();
-		PylosGame pylosGame = new PylosGame(pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE);
+        PylosBoard pylosBoard = new PylosBoard();
+        PylosGame pylosGame = new PylosGame(pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE);
 
-		pylosGame.play();
-	}
+        pylosGame.play();
+    }
 
-	public void startBattle() throws Exception {
-		PylosPlayer playerLight = new PylosPlayerBestFit();
-		PylosPlayer playerDark = new StudentPlayerBestFit();
+    public void startBattle() throws Exception {
+        PylosPlayer playerLight = new PylosPlayerBestFit();
+        PylosPlayer playerDark = new StudentPlayerBestFit();
 
-		Battle.play(playerLight, playerDark, 100);
-	}
+        Battle.play(playerLight, playerDark, 100);
+    }
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-		/* TODO !!! vm argument !!! -ea */
+        /* TODO !!! vm argument !!! -ea */
 
-		new PylosMain().startSingleGame();
-//		new PylosMain().startBattle();
+        if (args[0] == "0") new PylosMain().startSingleGame();
+        if (args[0] == "1") new PylosMain().startBattle();
 
-	}
+    }
 
 }

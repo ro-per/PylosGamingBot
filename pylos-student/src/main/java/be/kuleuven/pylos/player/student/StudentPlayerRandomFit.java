@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class StudentPlayerRandomFit extends PylosPlayer {
 
-    private final Random RANDOM = new Random(123456789);
+    private final Random RANDOM = new Random(-1);
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) throws Exception {
@@ -22,7 +22,8 @@ public class StudentPlayerRandomFit extends PylosPlayer {
         ArrayList<PylosLocation> vrijePlaatsen = new ArrayList<>();
         for (int i = 0; i < mogelijkPlekkenSpeler.length; i++) {
             PylosLocation currentLocation = mogelijkPlekkenSpeler[i];
-            if (!currentLocation.hasAbove() & currentLocation.isUsable()) {
+
+            if (currentLocation.isUsable()) {
                 vrijePlaatsen.add(currentLocation);
             }
         }
@@ -35,9 +36,9 @@ public class StudentPlayerRandomFit extends PylosPlayer {
 
             int max = vrijePlaatsen.size() - 1;
             int min = 0;
-            int randomGetal = RANDOM.nextInt(max - min +1) + min;
+            int randomGetal = RANDOM.nextInt(max - min + 1) + min;
             //nieuweBol.canMoveTo(vrijePlaatsen.get(randomGetal));
-            game.moveSphere(nieuweBol,vrijePlaatsen.get(randomGetal));
+            game.moveSphere(nieuweBol, vrijePlaatsen.get(randomGetal));
         }
 
     }
@@ -71,10 +72,16 @@ public class StudentPlayerRandomFit extends PylosPlayer {
     }
 
     @Override
-    public void doRemoveOrPass(PylosGameIF game, PylosBoard board) {
-        /* always pass */
-        //TODO
-        game.pass();
+    public void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception {
+
+        double temp = RANDOM.nextDouble();
+        System.out.println(temp);
+
+        if (temp < 0.00001) {
+            game.pass();
+        } else {
+            doRemove(game, board);
+        }
 
     }
 }

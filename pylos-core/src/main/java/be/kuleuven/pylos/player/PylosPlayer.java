@@ -25,7 +25,7 @@ public abstract class PylosPlayer {
 
 	public abstract void doRemove(PylosGameIF game, PylosBoard board) throws Exception;
 
-	public abstract void doRemoveOrPass(PylosGameIF game, PylosBoard board);
+	public abstract void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception;
 
 	protected Random getRandom() {
 		return RANDOM;
