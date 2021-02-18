@@ -1,37 +1,9 @@
----------------------------- PylosPlayerRandomFit VS. StudentPlayerRandomFit
-50 games where PylosPlayerRandomFit starts:
- *  30.00% PylosPlayerRandomFit
- *  70.00% StudentPlayerRandomFit
- *   0.00% Draw
-
-50 games where StudentPlayerRandomFit starts:
- *  72.00% PylosPlayerRandomFit
- *  28.00% StudentPlayerRandomFit
- *   0.00% Draw
-
-100 games in total:
- *  51.00% PylosPlayerRandomFit
- *  49.00% StudentPlayerRandomFit
- *   0.00% Draw
-
-Time: 0.04 sec (0.00 sec / game)
-----------------------------
-
----------------------------- PylosPlayerRandomFit VS. PylosPlayerRandomFit
-50 games where PylosPlayerRandomFit starts:
- *  34.00% PylosPlayerRandomFit
- *  66.00% PylosPlayerRandomFit
- *   0.00% Draw
-
-50 games where PylosPlayerRandomFit starts:
- *  70.00% PylosPlayerRandomFit
- *  30.00% PylosPlayerRandomFit
- *   0.00% Draw
-
-100 games in total:
- *  52.00% PylosPlayerRandomFit
- *  48.00% PylosPlayerRandomFit
- *   0.00% Draw
-
-Time: 0.03 sec (0.00 sec / game)
-----------------------------
+StudentPlayerRandomFit VS. PylosPlayerRandomFit (1000-battle)
+100%	41.30		58.60
+90%		42.50		57.40
+80%		44.80		55.10
+70%		42.50		57.30
+60%		44.70		55.20
+50%		45.90		54.00
+40%		48.10		51.70
+30%		47.00		52.80

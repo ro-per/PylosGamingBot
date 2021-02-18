@@ -15,20 +15,20 @@ import java.util.Random;
  */
 public class StudentPlayerRandomFit extends PylosPlayer {
 
-    private final Random RANDOM = new Random(-1);
+    private final Random R = new Random(-1);
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) throws Exception {
-        // Init arraylist
+        //1. Init arraylist
         ArrayList<PylosLocation> possibleLocations = new ArrayList<>(30);
-        //Add all 30 locations of the board in the arraylist
+        //2. Add all 30 locations of the board in the arraylist
         Collections.addAll(possibleLocations, board.getLocations());
-        // Remove unusable locations
+        //3. Remove un-usable locations
         possibleLocations.removeIf(pl -> !pl.isUsable());
 
         if (!possibleLocations.isEmpty()) {
             // Get random location from possibilities
-            int rand = RANDOM.nextInt(possibleLocations.size());
+            int rand = R.nextInt(possibleLocations.size());
             PylosLocation toLocation = possibleLocations.get(rand);
             // Get a reserve sphere
             PylosSphere reserveSphere = board.getReserve(this);
@@ -41,43 +41,27 @@ public class StudentPlayerRandomFit extends PylosPlayer {
 
     @Override
     public void doRemove(PylosGameIF game, PylosBoard board) throws Exception {
-        /* removeSphere a random sphere */
+        //1. Init arraylist
+        ArrayList<PylosSphere> possibleSpheresToRemove = new ArrayList<>(15);
+        //2. Add all all 15 spheres of 'player'
+        Collections.addAll(possibleSpheresToRemove, board.getSpheres(this));
+        //3. Remove un-removable locations
+        possibleSpheresToRemove.removeIf(ps -> !ps.canRemove());
 
-        PylosSphere[] playerSpheres = board.getSpheres(this); // gets spheres of own color
-
-        // FIND ALL POSSIBILITIES
-        ArrayList<PylosSphere> possibleSpheresToRemove = new ArrayList();
-        for (PylosSphere ps : playerSpheres) {
-            boolean onBoard = !ps.isReserve();
-            boolean canRemove = ps.canRemove();
-            if (onBoard && canRemove) {
-                possibleSpheresToRemove.add(ps);
-            }
-        }
-
-
-        if (possibleSpheresToRemove.isEmpty()) {
-            throw new Exception("No Spheres can be removed now !");
-        } else {
-            int temp = possibleSpheresToRemove.size() - 1;
-            PylosSphere sphereToRemove = possibleSpheresToRemove.get(RANDOM.nextInt(temp));
+        if (!possibleSpheresToRemove.isEmpty()) {
+            // Get Random sphere from possibilities
+            int rand = R.nextInt(possibleSpheresToRemove.size());
+            PylosSphere sphereToRemove = possibleSpheresToRemove.get(rand);
+            // Remove the sphere
             game.removeSphere(sphereToRemove);
+        } else {
+            throw new Exception("No Spheres can be removed now !");
         }
-
-
     }
 
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception {
-
-        double temp = RANDOM.nextDouble();
-        System.out.println(temp);
-
-        if (temp < 0.50) {
-            game.pass();
-        } else {
-            doRemove(game, board);
-        }
-
+        if (R.nextDouble() < 0.4) game.pass();
+        else doRemove(game, board);
     }
 }
