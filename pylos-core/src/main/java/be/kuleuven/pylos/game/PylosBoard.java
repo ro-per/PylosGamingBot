@@ -21,6 +21,7 @@ public class PylosBoard {
 	private final PylosSphere[] spheresLight;
 	private final PylosSphere[] spheresDark;
 	private final PylosSphere[] allSpheres;
+
 	private final ArrayList<PylosSphere> reservesLight;
 	private final ArrayList<PylosSphere> reservesDark;
 

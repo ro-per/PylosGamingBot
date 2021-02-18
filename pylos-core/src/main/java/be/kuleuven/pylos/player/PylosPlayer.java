@@ -21,9 +21,9 @@ public abstract class PylosPlayer {
 		this.RANDOM = random;
 	}
 
-	public abstract void doMove(PylosGameIF game, PylosBoard board);
+	public abstract void doMove(PylosGameIF game, PylosBoard board) throws Exception;
 
-	public abstract void doRemove(PylosGameIF game, PylosBoard board);
+	public abstract void doRemove(PylosGameIF game, PylosBoard board) throws Exception;
 
 	public abstract void doRemoveOrPass(PylosGameIF game, PylosBoard board);
 
