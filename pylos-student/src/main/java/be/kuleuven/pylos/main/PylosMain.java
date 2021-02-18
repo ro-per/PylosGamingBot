@@ -45,7 +45,7 @@ public class PylosMain {
 
 	public static void main(String[] args){
 
-		/* !!! vm argument !!! -ea */
+		/* TODO !!! vm argument !!! -ea */
 
 		new PylosMain().startSingleGame();
 //		new PylosMain().startBattle();
