@@ -39,8 +39,8 @@ public class PylosMain {
     }
 
     public void startBattle(int i) throws Exception {
-        PylosPlayer playerLight = new StudentPlayerBestFit();
-        PylosPlayer playerDark = new PylosPlayerMiniMax(5);
+        PylosPlayer playerLight = new PylosPlayerRandomFit();
+        PylosPlayer playerDark = new StudentPlayerRandomFit();
 
         Battle.play(playerLight, playerDark, i);
 
