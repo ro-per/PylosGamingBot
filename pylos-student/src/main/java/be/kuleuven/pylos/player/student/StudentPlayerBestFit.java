@@ -104,6 +104,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
     }
 
     private void checkingThreeSpheres() {
+        //TODO: use some methods from StudentPlayerBestFit2.java ?
        /* // geef chareacter mee van de sphere warvan er 3 zijn
         if (threeDark) {
             ppc_123 = DARKK;
