@@ -15,37 +15,14 @@ public class StudentPlayerBestFit extends PylosPlayer {
     private final Random R = new Random(-1); //TODO SEED STUDENT
 
     private PylosPlayerColor ppc_123, ppc_4 = null;
+    private PylosLocation toLocation = null;
 
-    /**
-     A. CHECK FOR 3/4 SQUARES
-        -ppc_123    : pylos sphere color 123
-        -ppc_4      : pylos sphere color 4
-        -ps_4       : pylos sphere 4
-        A1. 3/4 own color           : put fourth
-        A2. 3/4 other color
-            A21. 1/4 own color      : put on top
-            A22. 1/4 empty          : put forth (if not middle)
 
-     0. Vierkant maken                                          + Lx: Verwijder 2 bollen (de hoogste of laagste ?)
-            - 3 bollen zwart        : leg vierde
-        1. Blokeer andere speler
-            - 3 bollen wit, 1 zwart :leg bovenop
-            - 3 bollen wit          :leg vierde         ( !!!tenzij het midden)
-        2. Neem L2 middenste in beslag                             + L2: 4 mogelijke vierkanten
-        3. L2: Wit midden,
-            -geen zwart / meerdere zwarte: neem middenste van rand
-            -1 zwarte: neem tegenovergestelde (liefst midden rand als er meerdere zwarte zijn)
-
-        4. L1: leg zoveel mogelijk in het midden (3/4 plekken invullen)       + L1: 3 mogelijke vierkanten
-        5. L2: probeer midden van de rand te nemen + tegenovergestelde (maar da is methode 3)
-         */
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
-        //TODO shcrijf telkens een return
-
-        //STRATEGIE
-
-        threeSpheres();
+        // X. CHECKING FUNCTIONS
+        checkingThreeSpheres();
+        PylosLocation L2_middle_location = board.getBoardLocation(1, 1, 1); //TODO check coordinates
 
         // A. CHECK FOR 3/4 SQUARES
         if (ppc_123 != null) {
@@ -60,58 +37,64 @@ public class StudentPlayerBestFit extends PylosPlayer {
                     //TODO
                 }
                 // A22. 1/4 empty          : put forth (if not middle)
-                else if (L1_getMiddleSquareFree() != 1) {
-                   //TODO
+                else if (L1_getFreeLocationsMiddleSquare() != 1) {
+                    //TODO
                 }
             }
-        } else if (
-                L1_getMiddleSquareFree() == 0) {
-            //Neem L2 middenste in beslag
         }
-        // HIER GAAN WE ER VANUIT DAT L2 GELEGD KAN WORDEN
-        else if (!board.getBoardLocation(1, 1, 1).isUsable()) { //TODO check coordinaten
+        // B. CHECK IF MIDDLE 4/4          : put on top
+        else if (L1_getFreeLocationsMiddleSquare() == 0) {
+            //TODO
+        }
+        // C. CHECK IF L2 MIDDLE IS TAKEN
+        else if (L2_middle_location.isUsed()) { //L2_middle_location: see top of method
+            PylosSphere L2_middle_sphere = L2_middle_location.getSphere();
+            PylosPlayerColor L2_middle_color = L2_middle_sphere.PLAYER_COLOR;
 
-            PylosSphere[] ownSpheres = board.getSpheres(this);
-            int L2_number_black = 0;
-            for (PylosSphere ps : ownSpheres) {
-                PylosLocation pl = ps.getLocation();
-                if (pl.Z == 2) {  //TODO check coordinaat
-                    L2_number_black++;
+            //C1. MIDDLE SPHERE IS OWN COLOR
+            if (L2_middle_color.equals(this.PLAYER_COLOR)) {
+
+            }
+            //C2. MIDDLE SPHERE IS OTHER COLOR
+            else {
+                //C21. ONE BLACK SPHERE ON L2 : try to put on opposite side
+                if (CountSpheres(board, 2, this) == 1) {
+                    //TODO   check if possible on L2
+                }
+                //C22. NO/ MULTIPLE BLACK SPHERES ON L2 : try put on middle of border
+                else {
+                    //TODO   check if possible on L2
                 }
             }
-
-            if (L2_number_black == 1) {
-                // -1 zwarte: neem tegenovergestelde
-                //TODO check of tegenovergestelde kan gelegd worden
-            } else {
-                //geen zwart / meerdere zwarte: neem middenste van rand
-                //TODO check of middenste kan gelegd worden
-
-            }
+        }
+        // D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED : put in middle square
+        else if (L1_getFreeLocationsMiddleSquare() != 1) {
+            //TODO
+        }
+        // E. IF NO MOVES COULD BE PERFORMED   : put random
+        else {
+            //TODO should always be valid
         }
 
-        // SEMI RANDOM
-        else if (
-                L1_getMiddleSquareFree() != 1) {
-            //leg zoveel mogelijk in het midden (3/4 plekken invullen)       + L1: 3 mogelijke vierkanten
-        } else if (
-
-                L1_BorderFree()) {
-            // leg aan de rand
-        } else {
-            // leg random //TODO move that is always valid
-        }
-
-
-        // TODO lastPylosLocations.add()
+        //Y. PERFORM MOVE TO LOCATION RETRIEVED FROM A-E
+        performMove(board, game, toLocation);
     }
 
-    private int L1_getMiddleSquareFree() {
+    private void performMove(PylosBoard board, PylosGameIF game, PylosLocation toLocation) {
+        // Add location to last locations
+        lastPylosLocations.add(toLocation);
+        // Get a reserve sphere
+        PylosSphere reserveSphere = board.getReserve(this);
+        // Move the sphere
+        game.moveSphere(reserveSphere, toLocation);
+    }
+
+    private int L1_getFreeLocationsMiddleSquare() {
 
         return -1;
     }
 
-    private void threeSpheres() {
+    private void checkingThreeSpheres() {
        /* // geef chareacter mee van de sphere warvan er 3 zijn
         if (threeDark) {
             ppc_123 = DARKK;
@@ -129,7 +112,18 @@ public class StudentPlayerBestFit extends PylosPlayer {
         }else{
             ppc_4 = null;
         }*/
+    }
 
+    private int CountSpheres(PylosBoard board, int level, PylosPlayer pylosPlayer) {
+        PylosSphere[] spheres = board.getSpheres(pylosPlayer);
+        int count = 0;
+        for (PylosSphere ps : spheres) {
+            PylosLocation pl = ps.getLocation();
+            if (pl.Z == level) {  //TODO check coordinate
+                count++;
+            }
+        }
+        return count;
     }
 
 
