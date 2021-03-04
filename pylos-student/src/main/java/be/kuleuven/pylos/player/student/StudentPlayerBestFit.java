@@ -34,43 +34,39 @@ public class StudentPlayerBestFit extends PylosPlayer {
         //1. Init arraylist
         ArrayList<PylosSphere> possibleSpheresToRemove = new ArrayList<>(15);
         //2. Add all all 15 spheres of 'player'
-        Collections.addAll(possibleSpheresToRemove, board.getSpheres(this));
+        Collections.addAll(possibleSpheresToRemove, board.getSpheres(this)); //TODO use last pylos ?
         //3. Remove un-removable locations
         possibleSpheresToRemove.removeIf(ps -> !ps.canRemove());
 
         if (!possibleSpheresToRemove.isEmpty()) {
-            doRemoveLast(game,possibleSpheresToRemove);
-            doRemoveRandom(game, possibleSpheresToRemove);
+            PylosSphere sphereToRemove;
+            //TODO KIEZEN
+            sphereToRemove = doRemoveLast();
+            sphereToRemove = doRemoveRandom(possibleSpheresToRemove);
+
+            game.removeSphere(sphereToRemove);
         }
         // Only can when trying to remove second
         else {
             game.pass();
         }
-
-
     }
 
-    private void doRemoveLast(PylosGameIF game, ArrayList<PylosSphere> possibleSpheresToRemove){
-
-
-        // TODO: de laatste die vrij ligt + verwijder uit lijst
-        // {0 0 0 0 0 x 0}
-        PylosSphere sphereToRemove = lastPylosLocation.getSphere();
-        game.removeSphere(sphereToRemove);
+    private PylosSphere doRemoveLast() {
+        PylosLocation pl = lastPylosLocations.get(lastPylosLocations.size() - 1); // Take last
+        return pl.getSphere();
     }
-    private void doRemoveRandom(PylosGameIF game, ArrayList<PylosSphere> possibleSpheresToRemove){
+
+    private PylosSphere doRemoveRandom(ArrayList<PylosSphere> possibleSpheresToRemove) {
         // Get Random sphere from possibilities
         int rand = R.nextInt(possibleSpheresToRemove.size());
-        PylosSphere sphereToRemove = possibleSpheresToRemove.get(rand);
-        // Remove the sphere
-        game.removeSphere(sphereToRemove);
+        return possibleSpheresToRemove.get(rand);
     }
 
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) {
         // 1 of 2 wegnemen ?
         // 2e keer controleren
-
 
 
     }
