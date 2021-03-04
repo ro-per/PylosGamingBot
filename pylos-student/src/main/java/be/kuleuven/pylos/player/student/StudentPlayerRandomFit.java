@@ -54,23 +54,16 @@ public class StudentPlayerRandomFit extends PylosPlayer {
             PylosSphere sphereToRemove = possibleSpheresToRemove.get(rand);
             // Remove the sphere
             game.removeSphere(sphereToRemove);
-            teller_remove++;
         } else {
-            //throw new Exception("No Spheres can be removed now !");
             game.pass();
-            teller_pass++;
         }
     }
-
-    public static int teller_pass = 0;
-    public static int teller_remove = 0;
 
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception {
 
-        if (R.nextDouble() <= 0.5) {
+        if (R.nextDouble() <= 0) {
             game.pass();
-            teller_pass++;
         } else doRemove(game, board);
     }
 }

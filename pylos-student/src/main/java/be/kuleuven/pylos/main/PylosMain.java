@@ -6,13 +6,8 @@ import be.kuleuven.pylos.game.PylosGame;
 import be.kuleuven.pylos.game.PylosGameObserver;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.PylosPlayerObserver;
-import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
-import be.kuleuven.pylos.player.codes.PylosPlayerMiniMax;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
-import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
-
-import static be.kuleuven.pylos.player.student.StudentPlayerRandomFit.*;
 
 import java.util.Random;
 
@@ -43,12 +38,6 @@ public class PylosMain {
         PylosPlayer playerDark = new StudentPlayerRandomFit();
 
         Battle.play(playerLight, playerDark, i);
-
-        //TODO pass statistics
-        double total = teller_pass+teller_remove;
-        double temp_p = teller_pass/total;
-        double temp_r = teller_remove/total;
-        System.out.println("pass"+temp_p+" remove"+temp_r);
     }
 
     public static void main(String[] args) throws Exception {
