@@ -12,6 +12,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
     private List<PylosLocation> lastPylosLocations = new ArrayList<>(30);
     private final Random R = new Random(-1); //TODO SEED STUDENT
     private PylosPlayerColor ppc_123, ppc_4 = null;
+
     private PylosLocation toLocation = null;
 
     /**
