@@ -30,23 +30,24 @@ public class StudentPlayerBestFit extends PylosPlayer {
         if (ppc_123 != null) {
             // A1. 3/4 own color           : put fourth
             if (ppc_123 == this.PLAYER_COLOR) {
-                //TODO
+                //TODO set toLocation = ???
+
             }
             //A2. 3/4 other color
             else if (ppc_123 == this.PLAYER_COLOR.other()) {
                 // A21. 1/4 own color      : put on top
                 if (ppc_4 == this.PLAYER_COLOR) {
-                    //TODO
+                    //TODO set toLocation = ???
                 }
                 // A22. 1/4 empty          : put forth (if not middle)
                 else if (L1_getFreeLocationsMiddleSquare() != 1) {
-                    //TODO
+                    //TODO set toLocation = ???
                 }
             }
         }
         // B. CHECK IF MIDDLE 4/4          : put on top
         else if (L1_getFreeLocationsMiddleSquare() == 0) {
-            //TODO
+            //TODO set toLocation = ???
         }
         // C. CHECK IF L2 MIDDLE IS TAKEN
         else if (L2_middle_location.isUsed()) { //L2_middle_location: see top of method
@@ -61,21 +62,21 @@ public class StudentPlayerBestFit extends PylosPlayer {
             else {
                 //C21. ONE BLACK SPHERE ON L2 : try to put on opposite side
                 if (CountSpheres(board, 2, this) == 1) {
-                    //TODO   check if possible on L2
+                    //TODO  set toLocation = ??? check if possible on L2
                 }
                 //C22. NO/ MULTIPLE BLACK SPHERES ON L2 : try put on middle of border
                 else {
-                    //TODO   check if possible on L2
+                    //TODO  set toLocation = ??? check if possible on L2
                 }
             }
         }
         // D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED : put in middle square
         else if (L1_getFreeLocationsMiddleSquare() != 1) {
-            //TODO
+            //TODO set toLocation = ???
         }
         // E. IF NO MOVES COULD BE PERFORMED   : put random
         else {
-            //TODO should always be valid
+            //TODO set toLocation = ??? should always be valid
         }
 
         //Y. PERFORM MOVE TO LOCATION RETRIEVED FROM A-E
