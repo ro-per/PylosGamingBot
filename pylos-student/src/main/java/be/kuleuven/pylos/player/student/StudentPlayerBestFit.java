@@ -9,15 +9,17 @@ import java.util.List;
 import java.util.Random;
 
 public class StudentPlayerBestFit extends PylosPlayer {
-
-    private PylosLocation lastPylosLocation;
-    private List<PylosLocation> lastPylosLocations;
+    private List<PylosLocation> lastPylosLocations = new ArrayList<>(30);
     private final Random R = new Random(-1); //TODO SEED STUDENT
-
     private PylosPlayerColor ppc_123, ppc_4 = null;
     private PylosLocation toLocation = null;
 
-
+    /**
+     * check DO_REMOVE_STRATEGY.TXT for more explanation
+     *
+     * @param game
+     * @param board
+     */
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
         // X. CHECKING FUNCTIONS
@@ -80,6 +82,13 @@ public class StudentPlayerBestFit extends PylosPlayer {
         performMove(board, game, toLocation);
     }
 
+    /**
+     * put reserve spere on 'toLocation' and add location to list of last locations
+     *
+     * @param board
+     * @param game
+     * @param toLocation location to which a sphere must be put
+     */
     private void performMove(PylosBoard board, PylosGameIF game, PylosLocation toLocation) {
         // Add location to last locations
         lastPylosLocations.add(toLocation);
@@ -114,6 +123,12 @@ public class StudentPlayerBestFit extends PylosPlayer {
         }*/
     }
 
+    /**
+     * @param board
+     * @param level       is the height on which there has to be checked
+     * @param pylosPlayer is the current player
+     * @return count of spheres of specified pylosPlayer on specified level
+     */
     private int CountSpheres(PylosBoard board, int level, PylosPlayer pylosPlayer) {
         PylosSphere[] spheres = board.getSpheres(pylosPlayer);
         int count = 0;
@@ -126,48 +141,61 @@ public class StudentPlayerBestFit extends PylosPlayer {
         return count;
     }
 
-
+    /**
+     * STRATEGY: lastFrequency = 0.0    (Always remove random);
+     * lastFrequency = 1.0              (Always remove last); TODO: choose
+     *
+     * @param game
+     * @param board
+     */
     @Override
     public void doRemove(PylosGameIF game, PylosBoard board) {
         //1. Init arraylist
         ArrayList<PylosSphere> possibleSpheresToRemove = new ArrayList<>(15);
         //2. Add all all 15 spheres of 'player'
-        Collections.addAll(possibleSpheresToRemove, board.getSpheres(this)); //TODO use last pylos ?
+        Collections.addAll(possibleSpheresToRemove, board.getSpheres(this));
         //3. Remove un-removable locations
         possibleSpheresToRemove.removeIf(ps -> !ps.canRemove());
-
+        //4. Check if a sphere can be removed
         if (!possibleSpheresToRemove.isEmpty()) {
             PylosSphere sphereToRemove;
-            //TODO KIEZEN
-            sphereToRemove = doRemoveLast();
-            sphereToRemove = doRemoveRandom(possibleSpheresToRemove);
-
+            double lastFrequency = 0.0;
+            if (R.nextDouble() <= lastFrequency) sphereToRemove = doRemoveLast();
+            else sphereToRemove = doRemoveRandom(possibleSpheresToRemove); //TODO use lastPylosLocations
             game.removeSphere(sphereToRemove);
         }
-        // Only can when trying to remove second
+        //5. If no spheres can be removed (second remove), pass
         else {
             game.pass();
         }
     }
 
+    /**
+     * @return last sphere (put on board) from possible spheres to remove
+     */
     private PylosSphere doRemoveLast() {
         PylosLocation pl = lastPylosLocations.get(lastPylosLocations.size() - 1); // Take last
         return pl.getSphere();
     }
 
+    /**
+     * @param possibleSpheresToRemove is a list of spheres that can be removed
+     * @return random sphere from possible spheres to remove
+     */
     private PylosSphere doRemoveRandom(ArrayList<PylosSphere> possibleSpheresToRemove) {
         // Get Random sphere from possibilities
         int rand = R.nextInt(possibleSpheresToRemove.size());
         return possibleSpheresToRemove.get(rand);
     }
 
+    /**
+     * STRATEGY: passFrequency = 0.0    (Always try to remove 2);
+     * passFrequency = 1.0              (Always pass second turn);
+     */
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) {
-        // 1 of 2 wegnemen ?
-        // 2e keer controleren
-
-        // TODO probeer altijd 2 weg te nemen
-
-
+        double passFrequency = 0.0;
+        if (R.nextDouble() <= passFrequency) game.pass();
+        else doRemove(game, board);
     }
 }

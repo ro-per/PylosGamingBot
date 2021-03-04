@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-/**
- * Created by Ine on 5/05/2015.
- */
 public class StudentPlayerRandomFit extends PylosPlayer {
 
     private final Random R = new Random(-1); //TODO SEED STUDENT
@@ -25,7 +22,7 @@ public class StudentPlayerRandomFit extends PylosPlayer {
         Collections.addAll(possibleLocations, board.getLocations());
         //3. Remove un-usable locations
         possibleLocations.removeIf(pl -> !pl.isUsable());
-
+        //4. Check if a sphere can be removed
         if (!possibleLocations.isEmpty()) {
             // Get random location from possibilities
             int rand = R.nextInt(possibleLocations.size());
@@ -47,7 +44,7 @@ public class StudentPlayerRandomFit extends PylosPlayer {
         Collections.addAll(possibleSpheresToRemove, board.getSpheres(this));
         //3. Remove un-removable locations
         possibleSpheresToRemove.removeIf(ps -> !ps.canRemove());
-
+        //4. Check if a sphere can be removed
         if (!possibleSpheresToRemove.isEmpty()) {
             // Get Random sphere from possibilities
             int rand = R.nextInt(possibleSpheresToRemove.size());
@@ -61,9 +58,7 @@ public class StudentPlayerRandomFit extends PylosPlayer {
 
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception {
-
-        if (R.nextDouble() <= 0) {
-            game.pass();
-        } else doRemove(game, board);
+        if (R.nextDouble() <= 0) game.pass();
+        else doRemove(game, board);
     }
 }

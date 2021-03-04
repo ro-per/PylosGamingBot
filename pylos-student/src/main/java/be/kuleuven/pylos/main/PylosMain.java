@@ -11,43 +11,31 @@ import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 
 import java.util.Random;
 
-/**
- * Created by Jan on 15/11/2016.
- */
 public class PylosMain {
+    private final Random R = new Random(-1); //TODO SEED PYLOS
 
     public PylosMain() {
-
     }
 
-    public void startSingleGame() throws Exception {
-
-        Random random = new Random(0); //TODO SEED PYLOS
-
-        PylosPlayer randomPlayerCodes = new PylosPlayerRandomFit();
-        PylosPlayer randomPlayerStudent = new StudentPlayerRandomFit();
-
+    public void startSingleGame(PylosPlayer player1, PylosPlayer player2) throws Exception {
         PylosBoard pylosBoard = new PylosBoard();
-        PylosGame pylosGame = new PylosGame(pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE);
+        PylosGame pylosGame = new PylosGame(pylosBoard, player1, player2, R, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE);
 
         pylosGame.play();
     }
 
-    public void startBattle(int i) throws Exception {
-        PylosPlayer playerLight = new PylosPlayerRandomFit();
-        PylosPlayer playerDark = new StudentPlayerRandomFit();
-
-        Battle.play(playerLight, playerDark, i);
+    public void startBattle(PylosPlayer player1, PylosPlayer player2, int battleCount) throws Exception {
+        Battle.play(player1, player2, battleCount);
     }
 
     public static void main(String[] args) throws Exception {
-        /* TODO !!! vm argument !!! -ea */
+        /* !!! vm argument !!! -ea */
+        PylosPlayer player1 = new PylosPlayerRandomFit();
+        PylosPlayer player2 = new StudentPlayerRandomFit();
 
-        if (args[0].equals("-1")) new PylosMain().startSingleGame();
-        else new PylosMain().startBattle(100);
-
-
-        // wie dat er start verliest bij 2 randoms
+        int battleCount = Integer.parseInt(args[0]);
+        if (battleCount == 1) new PylosMain().startSingleGame(player1, player2);
+        else new PylosMain().startBattle(player1, player2, battleCount);
     }
 
 }
