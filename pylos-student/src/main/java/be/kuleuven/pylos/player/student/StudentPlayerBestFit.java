@@ -71,10 +71,9 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
             }
         }
-        //TODO: Cedric tot hier geraakt
         // B. CHECK IF MIDDLE 4/4          : put on top
-        else if (L1_getFreeLocationsMiddleSquare() == 0) {
-            //TODO set toLocation = ???
+        else if (L1_getFreeLocationsMiddleSquare(board) == 0) {
+            performMove(board,game,board.getBoardLocation(1,1,1));
         }
         // C. CHECK IF L2 MIDDLE IS TAKEN
         else if (L2_middle_location.isUsed()) { //L2_middle_location: see top of method
@@ -98,7 +97,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
             }
         }
         // D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED : put in middle square
-        else if (L1_getFreeLocationsMiddleSquare() != 1) {
+        else if (L1_getFreeLocationsMiddleSquare(board) != 1) {
             //TODO set toLocation = ???
         }
         // E. IF NO MOVES COULD BE PERFORMED   : put random
@@ -186,9 +185,25 @@ public class StudentPlayerBestFit extends PylosPlayer {
         game.moveSphere(reserveSphere, toLocation);
     }
 
-    private int L1_getFreeLocationsMiddleSquare() {
-
-        return -1;
+    private int L1_getFreeLocationsMiddleSquare(PylosBoard board) {
+        int teller = 0;
+        PylosLocation middle1 = board.getBoardLocation(1,1,0);
+        PylosLocation middle2 = board.getBoardLocation(1,2,0);
+        PylosLocation middle3 = board.getBoardLocation(2,2,0);
+        PylosLocation middle4 = board.getBoardLocation(2,1,0);
+        if (middle1.isUsable()){
+            teller++;
+        }
+        if (middle2.isUsable()){
+            teller++;
+        }
+        if (middle3.isUsable()){
+            teller++;
+        }
+        if (middle4.isUsable()){
+            teller++;
+        }
+        return teller;
     }
 
     private List<PylosLStructure> checkingThreeSpheres(PylosBoard board) {
@@ -239,28 +254,6 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
         return allSquaresWith3SpehersAnd1Empty;
 
-
-
-
-
-
-       /* // geef chareacter mee van de sphere warvan er 3 zijn
-        if (threeDark) {
-            ppc_123 = DARKK;
-        } else if (three white){
-            ppc_123 = LIGHT;
-        }else{
-            ppc_123 = null;
-        }
-
-
-        if (fourth dark){
-            ppc_4 = DARK;
-        }else if (fourth white){
-            ppc_4 = WHITE;
-        }else{
-            ppc_4 = null;
-        }*/
     }
 
     /**
