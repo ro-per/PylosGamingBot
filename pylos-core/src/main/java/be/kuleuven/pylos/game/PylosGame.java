@@ -75,6 +75,7 @@ public class PylosGame implements PylosGameIF {
 
 	@Override
 	public void moveSphere(PylosSphere pylosSphere, PylosLocation toLocation) {
+		System.out.println(toLocation.X + " " + toLocation.Y + " " + toLocation.Z);
 		assert currentState == PylosGameState.MOVE : "Method not supported in this state (" + currentState + ")";
 		assert pylosSphere.PLAYER_COLOR == currentPlayer.PLAYER_COLOR : currentPlayer.PLAYER_COLOR + " can not move a sphere of " + currentPlayer.PLAYER_COLOR.other();
 
