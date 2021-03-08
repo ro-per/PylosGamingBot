@@ -100,9 +100,24 @@ public class StudentPlayerBestFit extends PylosPlayer {
         else if (L1_getFreeLocationsMiddleSquare(board) != 1) {
             //TODO set toLocation = ???
         }
-        // E. IF NO MOVES COULD BE PERFORMED   : put random
+        // E. IF NO MOVES COULD BE PERFORMED   : put random, same as random fit
         else {
-            //TODO set toLocation = ??? should always be valid
+            //1. Init arraylist
+            ArrayList<PylosLocation> possibleLocations = new ArrayList<>(30);
+            //2. Add all 30 locations of the board in the arraylist
+            Collections.addAll(possibleLocations, board.getLocations());
+            //3. Remove un-usable locations
+            possibleLocations.removeIf(pl -> !pl.isUsable());
+            //4. Check if a sphere can be removed
+            if (!possibleLocations.isEmpty()) {
+                // Get random location from possibilities
+                int rand = R.nextInt(possibleLocations.size());
+                PylosLocation toLocation = possibleLocations.get(rand);
+                //Perform move
+                performMove(board,game,toLocation);
+            } else {
+                System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
+            }
         }
 
         //Y. PERFORM MOVE TO LOCATION RETRIEVED FROM A-E
