@@ -16,13 +16,13 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
     public void doMove(PylosGameIF game, PylosBoard board) {
         //1. Init arraylist
         ArrayList<PylosLocation> possibleLocations = new ArrayList<>();
-
         //2. Add all 30 locations of the board in the arraylist
         Collections.addAll(possibleLocations, board.getLocations());
         //3. Remove un-usable locations
         possibleLocations.removeIf(pl -> !pl.isUsable());
         //4. Shuffle possible locations
-        Collections.shuffle(possibleLocations, getRandom());
+
+        //Collections.shuffle(possibleLocations, getRandom()); TODO
 
         //5. ???
         PylosLocation toMaxThis = Collections.max(possibleLocations, Comparator.comparingInt(o -> getMaxInSquare(o, this)));
@@ -32,20 +32,29 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
         PylosSphere sphere = null;
         PylosLocation toLocation = null;
 
+
+        // A. CHECK FOR 3/4 SQUARES
+        // A2.
         if (toMaxOther.getMaxInSquare(this.OTHER) == 3) {
             sphere = getMovableSphereOrReserve(toMaxOther, board);
             toLocation = toMaxOther;
-        } else if (toMaxThis.getMaxInSquare(this) == 3) {
+        }
+        // A1.
+        else if (toMaxThis.getMaxInSquare(this) == 3) {
             sphere = getMovableSphereOrReserve(toMaxThis, board);
             toLocation = toMaxThis;
-        } else {
-            sortZorMaxInSquare(possibleLocations, this);
-            for (int i = 0; i < possibleLocations.size(); i++) {
-                PylosLocation bl = possibleLocations.get(i);
-                PylosSphere usedSphere = getMovableSphereMinInSquare(bl, board);
+        }
+
+
+
+        else {
+            sortZ_or_MaxInSquare(possibleLocations);
+
+            for (PylosLocation pylosLocation : possibleLocations) {
+                PylosSphere usedSphere = getMovableSphereMinInSquare(pylosLocation, board);
                 if (usedSphere != null && usedSphere.getLocation().getMaxInSquare(this.OTHER) < 3) {
                     sphere = usedSphere;
-                    toLocation = bl;
+                    toLocation = pylosLocation;
                     break;
                 }
             }
@@ -55,6 +64,8 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
             }
         }
 
+
+
         game.moveSphere(sphere, toLocation);
         lastPylosLocation = toLocation;
 
@@ -62,10 +73,12 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
 
     public int getMaxInSquare(PylosLocation o1, PylosPlayer player) {
         int maxInSquare = 0;
-        for (PylosSquare bs : o1.getSquares()) {
-            int newMax = Math.max(maxInSquare, bs.getInSquare(player.PLAYER_COLOR));
+        for (PylosSquare ps : o1.getSquares()) {
+            int numberOfSpheresInSuare = ps.getInSquare(player.PLAYER_COLOR);
+            int newMax = Math.max(maxInSquare, numberOfSpheresInSuare);
+
             if (newMax > maxInSquare) {
-                if (bs.getInSquare(player.OTHER) > 0) {
+                if (ps.getInSquare(player.OTHER) > 0) {
                     continue;
                 } else {
                     maxInSquare = newMax;
@@ -79,11 +92,14 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
         return Collections.max(locations, Comparator.comparingInt((PylosLocation o) -> o.Z).thenComparingInt(o -> getMaxInSquare(o, player)));
     }
 
-    private void sortZorMaxInSquare(ArrayList<PylosLocation> locations, PylosPlayer player) {
+    private void sortZ_or_MaxInSquare(ArrayList<PylosLocation> locations) {
         locations.sort((o1, o2) -> {
             int compZ = -Integer.compare(o1.Z, o2.Z);
+
+            // Sort on Z
             if (compZ != 0) return compZ;
-            return -Integer.compare(getMaxInSquare(o1, player), getMaxInSquare(o2, player));
+            // Sort on max in square
+            else return -Integer.compare(getMaxInSquare(o1, this), getMaxInSquare(o2, this));
         });
     }
 

@@ -54,7 +54,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
             }
             //A2. 3/4 other color
             else if (!lStructuresOpponent.isEmpty()) {
-                PylosLStructure tmpStructure = checkIfListHasStructureWithForth(lStructuresOpponent);
+                PylosLStructure tmpStructure = getLStructureWithFilledFourth(lStructuresOpponent);
                 if (tmpStructure!=null){
                     // A21. 1/4 own color      : put on top
                     //TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH OWN COLOR
@@ -63,7 +63,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
                     //TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY FORTH
                     //A22. 1/4 empty          : put forth (if not middle)
                     tmpStructure = lStructuresOpponent.get(0);
-                    if (!tmpStructure.getSquare().equals(getMiddleSquareL1(board))){
+                    if (!tmpStructure.getSquare().equals(getMiddlePylosSquare_L1(board))){
                         performMove(board,game,tmpStructure.getForthLocation());
                     }
                 }
@@ -72,7 +72,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
             }
         }
         // B. CHECK IF MIDDLE 4/4          : put on top
-        else if (L1_getFreeLocationsMiddleSquare(board) == 0) {
+        else if (getFreeLocationsMiddleSquare_L1(board) == 0) {
             performMove(board,game,board.getBoardLocation(1,1,1));
         }
         // C. CHECK IF L2 MIDDLE IS TAKEN
@@ -97,7 +97,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
             }
         }
         // D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED : put in middle square
-        else if (L1_getFreeLocationsMiddleSquare(board) != 1) {
+        else if (getFreeLocationsMiddleSquare_L1(board) != 1) {
             //TODO set toLocation = ???
         }
         // E. IF NO MOVES COULD BE PERFORMED   : put random, same as random fit
@@ -124,42 +124,42 @@ public class StudentPlayerBestFit extends PylosPlayer {
         performMove(board, game, toLocation);
     }
 
-    private PylosSquare getMiddleSquareL1(PylosBoard board) {
-        List<PylosSquare> allSquares = Arrays.asList(board.getAllSquares());
+    private List<PylosLocation> getMiddleSquareLocations(PylosBoard  board){
         List<PylosLocation> middleLocations = new ArrayList<>();
+        middleLocations.add(board.getBoardLocation(1,1,0));
+        middleLocations.add(board.getBoardLocation(1,2,0));
+        middleLocations.add(board.getBoardLocation(2,2,0));
+        middleLocations.add(board.getBoardLocation(2,1,0));
+        return middleLocations;
+    }
 
-        //FIRST LEVEL
-        PylosLocation middle1 = board.getBoardLocation(1,1,0);
-        PylosLocation middle2 = board.getBoardLocation(1,2,0);
-        PylosLocation middle3 = board.getBoardLocation(2,2,0);
-        PylosLocation middle4 = board.getBoardLocation(2,1,0);
-        middleLocations.add(middle1);
-        middleLocations.add(middle2);
-        middleLocations.add(middle3);
-        middleLocations.add(middle4);
-
-        //SECOND LEVEL
-        PylosLocation middle5 = board.getBoardLocation(1,1,1);
+    private PylosSquare getMiddlePylosSquare_L1(PylosBoard board) {
+        List<PylosSquare> allSquares = Arrays.asList(board.getAllSquares()); //TODO kan ook als gewone array gebruikt worden
+        List<PylosLocation> middleLocations = getMiddleSquareLocations(board);
 
         PylosSquare middleSquare = null;
-        boolean allemaalGelijk = true;
+        boolean allEqual ;
+
         for (PylosSquare square: allSquares){
-            buitenloop: for (int i = 0; i < square.getLocations().length; i++) {
-                binnenloop:for (int j = 0; j < middleLocations.size() ; j++) {
-                    PylosLocation l1 = square.getLocations()[i];
-                    PylosLocation l2 = middleLocations.get(j);
+            allEqual = true;
+            OUTER: for (int i = 0; i < square.getLocations().length; i++) {
+                PylosLocation l1 = square.getLocations()[i]; // ARRAY
+
+                INNER:for (int j = 0; j < middleLocations.size() ; j++) {
+                    PylosLocation l2 = middleLocations.get(j); //ARRAYLIST
+
                     if (equalLocations(l1,l2)){
-                        break binnenloop;
+                        break INNER;
                     }
 
                     if (j == (middleLocations.size()-1)){
-                        allemaalGelijk = false;
-                        break buitenloop;
+                        allEqual = false;
+                        break OUTER;
                     }
                 }
 
             }
-            if (allemaalGelijk){
+            if (allEqual){
                 middleSquare = square;
                 break;
             }
@@ -168,17 +168,13 @@ public class StudentPlayerBestFit extends PylosPlayer {
     }
 
     private boolean equalLocations(PylosLocation l1,PylosLocation l2){
-        if (l1.X == l2.X && l1.Y == l2.Y && l1.Z == l2.Z){
-            return true;
-        } else {
-            return false;
-        }
+        return l1.X == l2.X && l1.Y == l2.Y && l1.Z == l2.Z;
     }
 
-    private PylosLStructure checkIfListHasStructureWithForth(List<PylosLStructure> lStructuresOpponent) {
-        for (PylosLStructure structure: lStructuresOpponent){
+    private PylosLStructure getLStructureWithFilledFourth(List<PylosLStructure> lStructures) {
+        for (PylosLStructure structure: lStructures){
             if (structure.getForthLocation() != null){
-                return structure;
+                return structure; //TODO neem niet noodzakelijk eerste
             }
         }
         return null;
@@ -200,25 +196,14 @@ public class StudentPlayerBestFit extends PylosPlayer {
         game.moveSphere(reserveSphere, toLocation);
     }
 
-    private int L1_getFreeLocationsMiddleSquare(PylosBoard board) {
-        int teller = 0;
-        PylosLocation middle1 = board.getBoardLocation(1,1,0);
-        PylosLocation middle2 = board.getBoardLocation(1,2,0);
-        PylosLocation middle3 = board.getBoardLocation(2,2,0);
-        PylosLocation middle4 = board.getBoardLocation(2,1,0);
-        if (middle1.isUsable()){
-            teller++;
+    private int getFreeLocationsMiddleSquare_L1(PylosBoard board) {
+        int counter = 0;
+        for (PylosLocation location: getMiddleSquareLocations(board)){
+            if (location.isUsable()){
+                counter++;
+            }
         }
-        if (middle2.isUsable()){
-            teller++;
-        }
-        if (middle3.isUsable()){
-            teller++;
-        }
-        if (middle4.isUsable()){
-            teller++;
-        }
-        return teller;
+        return counter;
     }
 
     private List<PylosLStructure> checkingThreeSpheres(PylosBoard board) {
@@ -227,13 +212,14 @@ public class StudentPlayerBestFit extends PylosPlayer {
         PylosSquare[] allSquares = board.getAllSquares();
         //2. CAST TO LIST FOR EASY USE
         List<PylosSquare> squares = new ArrayList<>();
-        for (int i = 0; i < allSquares.length; i++) {
-            squares.add(allSquares[i]);
-        }
+        squares.addAll(Arrays.asList(allSquares));
+
         //3. LOOK FOR SQUARES CONSISTING OF 3 SPEHERES
-        List<PylosLStructure> allSquaresWith3SpehersAnd1Empty = new ArrayList<>();
+        List<PylosLStructure> allSquaresWith3Spehers = new ArrayList<>();
         for(PylosSquare square: squares){
             PylosLocation forth = null;
+            //TODO eventueel inkorten
+
             // CHECK IF THE SQUARE HAS 3 OF A KIND
             if (square.getInSquare(DARK) == 3){
                 for (PylosLocation location: square.getLocations()){
@@ -247,7 +233,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
                         break;
                     }
                 }
-                allSquaresWith3SpehersAnd1Empty.add(new PylosLStructure(square,DARK,forth));
+                allSquaresWith3Spehers.add(new PylosLStructure(square,DARK,forth));
             }
             if (square.getInSquare(LIGHT) == 3){
                 for (PylosLocation location: square.getLocations()){
@@ -261,13 +247,13 @@ public class StudentPlayerBestFit extends PylosPlayer {
                         break;
                     }
                 }
-                allSquaresWith3SpehersAnd1Empty.add(new PylosLStructure(square,LIGHT,forth));
+                allSquaresWith3Spehers.add(new PylosLStructure(square,LIGHT,forth));
             }
 
 
         }
 
-        return allSquaresWith3SpehersAnd1Empty;
+        return allSquaresWith3Spehers;
 
     }
 

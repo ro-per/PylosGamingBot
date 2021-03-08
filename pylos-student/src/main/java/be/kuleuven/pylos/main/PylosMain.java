@@ -8,6 +8,7 @@ import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.PylosPlayerObserver;
 import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
+import be.kuleuven.pylos.player.student.StudentPlayerBestFit2;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 
 import java.util.Random;
@@ -32,7 +33,7 @@ public class PylosMain {
     public static void main(String[] args) throws Exception {
         /* !!! vm argument !!! -ea */
         PylosPlayer player1 = new PylosPlayerBestFit();
-        PylosPlayer player2 = new StudentPlayerRandomFit();
+        PylosPlayer player2 = new StudentPlayerBestFit2();
 
         int battleCount = Integer.parseInt(args[0]);
         if (battleCount == 1) new PylosMain().startSingleGame(player1, player2);
