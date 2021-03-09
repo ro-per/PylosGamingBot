@@ -4,11 +4,13 @@ public class PylosLStructure {
     private PylosSquare square;
     private PylosPlayerColor color;
     private PylosLocation forthLocation;
+    private boolean forthLocationIsEmpty;
 
-    public PylosLStructure(PylosSquare square, PylosPlayerColor color, PylosLocation forthLocation) {
+    public PylosLStructure(PylosSquare square, PylosPlayerColor color, PylosLocation forthLocation,Boolean forthLocationIsEmpty) {
         this.square = square;
         this.color = color;
         this.forthLocation = forthLocation;
+        this.forthLocationIsEmpty = forthLocationIsEmpty;
     }
 
     public PylosSquare getSquare() {
@@ -33,5 +35,13 @@ public class PylosLStructure {
 
     public void setForthLocation(PylosLocation forthLocation) {
         this.forthLocation = forthLocation;
+    }
+
+    public boolean isForthLocationEmpty() {
+        return forthLocationIsEmpty;
+    }
+
+    public void setForthLocationIsEmpty(boolean forthLocationIsEmpty) {
+        this.forthLocationIsEmpty = forthLocationIsEmpty;
     }
 }

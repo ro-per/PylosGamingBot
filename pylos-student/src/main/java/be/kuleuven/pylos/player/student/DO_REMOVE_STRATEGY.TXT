@@ -20,3 +20,9 @@ Y. PERFORM MOVE TO LOCATION RETRIEVED FROM A-E
      * 4. L1: leg zoveel mogelijk in het midden (3/4 plekken invullen)       + L1: 3 mogelijke vierkanten
      * 5. L2: probeer midden van de rand te nemen + tegenovergestelde (maar da is methode 3)
      */
+
+
+
+EERSTE OPMERKINGEN BIJ HET SPELEN:
+* l structure van de andere blokkeren krijgt voorrang op het nemen van de middelste plek --> willen we dit wel?
+* Nog fouten bij het overlopen van de l structures

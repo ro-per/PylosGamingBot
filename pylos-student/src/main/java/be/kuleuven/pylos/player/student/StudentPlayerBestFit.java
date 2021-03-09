@@ -59,6 +59,11 @@ public class StudentPlayerBestFit extends PylosPlayer {
                     // A21. 1/4 own color      : put on top
                     System.out.println("Location in point A21");
                     toLocation = tmpStructure.getSquare().getTopLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH OWN COLOR
+                    if (tmpStructure.getSquare().getTopLocation().isUsable()){
+                        toLocation = tmpStructure.getSquare().getTopLocation();
+                    } else {
+                        toLocation = getRandomLocation(board); //TODO in principe moet hij opnieuw if structuur overlopen
+                    }
                 } else {
                     //A22. 1/4 empty          : put forth (if not middle)
                     tmpStructure = lStructuresOpponent.get(0);
@@ -284,7 +289,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     private PylosLStructure getLStructureWithFilledFourth(List<PylosLStructure> lStructures) {
         for (PylosLStructure structure : lStructures) {
-            if (structure.getForthLocation() != null) {
+            if (!structure.isForthLocationEmpty()) {
                 return structure; //TODO neem niet noodzakelijk eerste
             }
         }
@@ -329,36 +334,41 @@ public class StudentPlayerBestFit extends PylosPlayer {
         List<PylosLStructure> allSquaresWith3Spehers = new ArrayList<>();
         for (PylosSquare square : squares) {
             PylosLocation forth = null;
+            boolean forthIsEmpty = false;
             //TODO eventueel inkorten
 
             // CHECK IF THE SQUARE HAS 3 OF A KIND
             if (square.getInSquare(DARK) == 3) {
                 for (PylosLocation location : square.getLocations()) {
-                    // EMPTY OR OTHER COLOR?
+                    // EMPTY LOCATION
                     if (location.isUsable()) {
-                        forth = null;
+                        forth = location;
+                        forthIsEmpty = true;
                         break;
                     }
                     if (location.getSphere().PLAYER_COLOR == LIGHT) {
                         forth = location;
+                        forthIsEmpty = false;
                         break;
                     }
                 }
-                allSquaresWith3Spehers.add(new PylosLStructure(square, DARK, forth));
+                allSquaresWith3Spehers.add(new PylosLStructure(square, DARK, forth,forthIsEmpty));
             }
             if (square.getInSquare(LIGHT) == 3) {
                 for (PylosLocation location : square.getLocations()) {
-                    // EMPTY OR OTHER COLOR?
+                    // EMPTY LOCATION
                     if (location.isUsable()) {
-                        forth = null;
+                        forth = location;
+                        forthIsEmpty = true;
                         break;
                     }
                     if (location.getSphere().PLAYER_COLOR == DARK) {
                         forth = location;
+                        forthIsEmpty = false;
                         break;
                     }
                 }
-                allSquaresWith3Spehers.add(new PylosLStructure(square, LIGHT, forth));
+                allSquaresWith3Spehers.add(new PylosLStructure(square, LIGHT, forth,forthIsEmpty));
             }
 
 
