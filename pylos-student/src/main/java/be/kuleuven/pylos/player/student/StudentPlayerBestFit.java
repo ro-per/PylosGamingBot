@@ -45,6 +45,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
             if (!lStructuresOwnColor.isEmpty()) {
                 for (PylosLStructure structure : lStructuresOwnColor) {
                     if (structure.getForthLocation() == null) {
+                        System.out.println("Location in point A1");
                         toLocation = lStructuresOwnColor.get(0).getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
                         break;
                     }
@@ -56,11 +57,13 @@ public class StudentPlayerBestFit extends PylosPlayer {
                 PylosLStructure tmpStructure = getLStructureWithFilledFourth(lStructuresOpponent);
                 if (tmpStructure != null) {
                     // A21. 1/4 own color      : put on top
+                    System.out.println("Location in point A21");
                     toLocation = tmpStructure.getSquare().getTopLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH OWN COLOR
                 } else {
                     //A22. 1/4 empty          : put forth (if not middle)
                     tmpStructure = lStructuresOpponent.get(0);
                     if (!tmpStructure.getSquare().equals(getMiddlePylosSquare_L1(board))) {
+                        System.out.println("Location in point A22");
                         toLocation = tmpStructure.getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY FORTH
                     }
                 }
@@ -70,6 +73,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
         }
         // B. CHECK IF MIDDLE 4/4          : put on top
         else if (getFreeLocationsMiddleSquare_L1(board) == 0) {
+            System.out.println("Location in point B");
             toLocation = board.getBoardLocation(1, 1, 1);
         }
         // C. CHECK IF L2 MIDDLE IS TAKEN
@@ -79,36 +83,37 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
             //C1. MIDDLE SPHERE IS OWN COLOR
             if (L2_middle_color.equals(this.PLAYER_COLOR)) {
-                boolean bool = false;
-                // C13. PUT IN RANDOM LOCATION IF L2 NOT USABLE
-                toLocation = getRandomLocation(board);
-                // C11. TRY TO PUT IN MIDDLE OF BORDER OF L2
-                for (PylosLocation pl : getBorderMiddle_L2(board)) {
-                    if (pl.isUsable()) {
-                        toLocation = pl;
-                        bool = true;
-                        break;
-                    }
-                }
-                // C12. TRY TO PUT IN CORNERS OF L2
-                if (!bool) {
-                    for (PylosLocation pl : getCorners_L2(board)) {
-                        if (pl.isUsable()) {
-                            toLocation = pl;
-                            break;
-                        }
-                    }
-                }
+                System.out.println("Location in point C1");
+                toLocation = getBestLocationOnL2(board);
             }
             //C2. MIDDLE SPHERE IS OTHER COLOR
             else {
-                //C21. ONE BLACK SPHERE ON L2 : try to put on opposite side
-                if (CountSpheres(board, 2, this) == 1) {
-                    //TODO  set toLocation = ??? check if possible on L2
+                //C21. ONE (OR MORE) BLACK SPHERES ON L2 : try to put on opposite side
+                if (CountSpheres(board, 2, this) >= 1) {
+                    //C211 LOOK FOR OPPOSITE SITE
+                    List<PylosLocation> welkeLocationsJuist = getLocationsOfPlayerSpehersOnLevel(board,2);
+                    boolean nergensEenOpposite = true;
+                    for (PylosLocation location: welkeLocationsJuist){
+                        PylosLocation oppositeLocation = getOppositeLocationL2(board,location);
+                        if (oppositeLocation!= null && oppositeLocation.isUsable()){
+                            System.out.println("Location in point C211");
+                            toLocation = oppositeLocation;
+                            nergensEenOpposite = false;
+                            break;
+                        }
+                    }
+
+                    //C212 OPPOSITE IS NOT USABLE, TRY BEST OTHER LOCATION
+                    if (nergensEenOpposite){
+                        System.out.println("Location in point C212");
+                        toLocation = getBestLocationOnL2(board);
+                    }
+
                 }
                 //C22. NO/ MULTIPLE BLACK SPHERES ON L2 : try put on middle of border
                 else {
-                    //TODO  set toLocation = ??? check if possible on L2
+                    System.out.println("Location in point C22");
+                    toLocation = getBestLocationOnL2(board);
                 }
             }
         }
@@ -116,6 +121,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
         else if (getFreeLocationsMiddleSquare_L1(board) != 1) {
             for (PylosLocation pl : getMiddleSquareLocations_L1(board)) {
                 if (pl.isUsable()) {
+                    System.out.println("Location in point D");
                     toLocation = pl;
                     break;
                 }
@@ -123,11 +129,72 @@ public class StudentPlayerBestFit extends PylosPlayer {
         }
         // E. IF NO MOVES COULD BE PERFORMED   : put random, same as random fit
         else {
+            System.out.println("Location in point E");
            toLocation = getRandomLocation(board);
         }
 
         //Y. PERFORM MOVE TO LOCATION RETRIEVED FROM A-E
         performMove(board, game, toLocation);
+    }
+
+    private PylosLocation getOppositeLocationL2(PylosBoard board, PylosLocation locationCurrentSphere) {
+        // EFKES MET STRINGS WERKEN ANDERS COMPARATOR KLASSEN SCHRIJVEN --> GEEN ZIN IN
+        String location = locationCurrentSphere.X + "" + locationCurrentSphere.Y + "" + locationCurrentSphere.Z;
+        switch (location){
+            case "101":
+                System.out.println("Opposite is 121");
+                return board.getBoardLocation(1,2,1);
+            case "211":
+                System.out.println("Opposite is 011");
+                return board.getBoardLocation(0,1,1);
+            case "121":
+                System.out.println("Opposite is 101");
+                return board.getBoardLocation(1,0,1);
+            case "011":
+                System.out.println("Opposite is 211");
+                return board.getBoardLocation(2,1,1);
+            default:
+                System.out.println("Location is a corner of something went wrong with string comparison");
+                return null;
+        }
+
+    }
+
+    private PylosLocation getBestLocationOnL2(PylosBoard board){
+        boolean bool = false;
+        toLocation = getRandomLocation(board);
+
+        //GET LOCATION IN THE MIDDLE OF THE BORDER
+        for (PylosLocation pl : getBorderMiddle_L2(board)) {
+            if (pl.isUsable()) {
+                toLocation = pl;
+                bool = true;
+                break;
+            }
+        }
+        // TRY TO GET A CORNER OF THE BORDER
+        if (!bool) {
+            for (PylosLocation pl : getCorners_L2(board)) {
+                if (pl.isUsable()) {
+                    toLocation = pl;
+                    break;
+                }
+            }
+        }
+
+        //OTHERWISE RANDOM VALUE WIL REMAIN
+        return toLocation;
+    }
+
+    private List<PylosLocation> getLocationsOfPlayerSpehersOnLevel(PylosBoard board, int level) {
+        List<PylosLocation> locationsOnLevel = new ArrayList<>();
+        for (PylosSphere ps: board.getSpheres(this)){
+            PylosLocation locationSpere = ps.getLocation();
+            if (locationSpere.Z == level){
+                locationsOnLevel.add(locationSpere);
+            }
+        }
+        return locationsOnLevel;
     }
 
     private PylosLocation getRandomLocation(PylosBoard board){
@@ -312,7 +379,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
         int count = 0;
         for (PylosSphere ps : spheres) {
             PylosLocation pl = ps.getLocation();
-            if (pl.Z == level) {  //TODO check coordinate
+            if (pl.Z == level) {
                 count++;
             }
         }
