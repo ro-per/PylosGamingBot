@@ -14,7 +14,6 @@ public class StudentPlayerBestFit extends PylosPlayer {
     private PylosPlayerColor ppc_123, ppc_4 = null;
 
     private PylosLocation toLocation = null;
-    boolean temp=false;
 
     /*
     https://www.javatpoint.com/java-logger
@@ -37,56 +36,33 @@ public class StudentPlayerBestFit extends PylosPlayer {
      */
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
-        logger.info("---------------------------------- doMove");
+        //logger.info("---------------------------------- doMove");
 
 
         // X. CHECKING FUNCTIONS
         List<PylosLStructure> lStructuresOwnColor = getLStructures(board, this.PLAYER_COLOR);
+        PylosLocation tmpLocation = checkIfSquareCanBeMade(lStructuresOwnColor); //TODO: necesairy for A1
         List<PylosLStructure> lStructuresOpponent = getLStructures(board, this.PLAYER_COLOR.other());
 
         PylosLocation L2_middle_location = board.getBoardLocation(1, 1, 1); //COORDINATEN KLOPPEN
         // B. CHECK IF MIDDLE 4/4          : put on top
-        if (getFreeLocationsMiddleSquare_L1(board) == 0) {
-            System.out.println("***********************************");
-            if (!temp) {
-                logger.info("Location in point B");
-                toLocation = L2_middle_location;
-                temp=true;
-            }
+        if (getFreeLocationsMiddleSquare_L1(board) == 0 && L2_middle_location.isUsable()) {
+            System.out.println("Location in point B");
+            //logger.info("Location in point B");
+            toLocation = L2_middle_location;
         }
 
-        // A. CHECK FOR 3/4 SQUARES
-        //else if (!lStructures.isEmpty()) {
-        //MAKE LIST OF EVERY COLOR
-           /* List<PylosLStructure> lStructuresOwnColor = new ArrayList<>();
-            List<PylosLStructure> lStructuresOpponent = new ArrayList<>();
-            for (PylosLStructure l : lStructures) {
-                if (l.getColor() == this.PLAYER_COLOR) {
-                    lStructuresOwnColor.add(l);
-                } else {
-                    lStructuresOpponent.add(l);
-                }
-            }*/
-
         // A1. 3/4 own color           : put fourth
-        else if (!lStructuresOwnColor.isEmpty()) {
-            System.out.println("////////////////////////////////");
-
-            for (PylosLStructure structure : lStructuresOwnColor) {
-                if (structure.getForthLocation() == null) {
-                    logger.info("Location in point A1");
-                    toLocation = lStructuresOwnColor.get(0).getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
-                    break;
-                }
-            }
-
+        else if ( tmpLocation != null) {
+            toLocation = tmpLocation;
         }
         //A2. 3/4 other color
         else if (!lStructuresOpponent.isEmpty()) {
             PylosLStructure tmpStructure = getLStructureWithFilledFourth(lStructuresOpponent);
             if (tmpStructure != null) {
                 // A21. 1/4 own color      : put on top
-                logger.info("Location in point A21");
+                System.out.println("Location in point A21");
+                //logger.info("Location in point A21");
                 toLocation = tmpStructure.getSquare().getTopLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH OWN COLOR
                 if (tmpStructure.getSquare().getTopLocation().isUsable()) {
                     toLocation = tmpStructure.getSquare().getTopLocation();
@@ -97,7 +73,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
                 //A22. 1/4 empty          : put forth (if not middle)
                 tmpStructure = lStructuresOpponent.get(0);
                 if (!tmpStructure.getSquare().equals(getMiddlePylosSquare_L1(board))) {
-                    logger.info("Location in point A22");
+                    System.out.println("Location in point A22");
+                    //logger.info("Location in point A22");
                     toLocation = tmpStructure.getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY FORTH
                 }
             }
@@ -113,7 +90,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
             //C1. MIDDLE SPHERE IS OWN COLOR
             if (L2_middle_color.equals(this.PLAYER_COLOR)) {
-                logger.info("Location in point C1");
+                System.out.println("Location in point C1");
+                //logger.info("Location in point C1");
                 toLocation = getBestLocationOnL2(board);
             }
             //C2. MIDDLE SPHERE IS OTHER COLOR
@@ -126,7 +104,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
                     for (PylosLocation location : welkeLocationsJuist) {
                         PylosLocation oppositeLocation = getOppositeLocationL2(board, location);
                         if (oppositeLocation != null && oppositeLocation.isUsable()) {
-                            logger.info("Location in point C211");
+                            System.out.println("Location in point C211");
+                            //logger.info("Location in point C211");
                             toLocation = oppositeLocation;
                             nergensEenOpposite = false;
                             break;
@@ -135,14 +114,16 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
                     //C212 OPPOSITE IS NOT USABLE, TRY BEST OTHER LOCATION
                     if (nergensEenOpposite) {
-                        logger.info("Location in point C212");
+                        System.out.println("Location in point C212");
+                        //logger.info("Location in point C212");
                         toLocation = getBestLocationOnL2(board);
                     }
 
                 }
                 //C22. NO/ MULTIPLE BLACK SPHERES ON L2 : try put on middle of border
                 else {
-                    logger.info("Location in point C22");
+                    System.out.println("Location in point C22");
+                    //logger.info("Location in point C22");
                     toLocation = getBestLocationOnL2(board);
                 }
             }
@@ -151,7 +132,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
         else if (getFreeLocationsMiddleSquare_L1(board) != 1) {
             for (PylosLocation pl : getMiddleSquareLocations_L1(board)) {
                 if (pl.isUsable()) {
-                    logger.info("Location in point D");
+                    System.out.println("Location in point D");
+                    //logger.info("Location in point D");
                     toLocation = pl;
                     break;
                 }
@@ -159,7 +141,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
         }
         // E. IF NO MOVES COULD BE PERFORMED   : put random, same as random fit
         else {
-            logger.info("Location in point E");
+            System.out.println("Location in point E");
+            //logger.info("Location in point E");
             toLocation = getSemiRandomLocation(board); //Kijk eerst voor locaties niet in het midden
         }
 
@@ -167,24 +150,44 @@ public class StudentPlayerBestFit extends PylosPlayer {
         performMove(board, game, toLocation);
     }
 
+    private PylosLocation checkIfSquareCanBeMade(List<PylosLStructure> lStructuresOwnColor) {
+        if (!lStructuresOwnColor.isEmpty()){
+            for (PylosLStructure structure : lStructuresOwnColor) {
+                if (structure.isForthLocationEmpty()) {
+                    System.out.println("Location in point A1");
+                    //logger.info("Location in point A1");
+                    return lStructuresOwnColor.get(0).getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
+                }
+            }
+            return null;
+        } else {
+            return null;
+        }
+    }
+
     private PylosLocation getOppositeLocationL2(PylosBoard board, PylosLocation locationCurrentSphere) {
         // EFKES MET STRINGS WERKEN ANDERS COMPARATOR KLASSEN SCHRIJVEN --> GEEN ZIN IN
         String location = locationCurrentSphere.X + "" + locationCurrentSphere.Y + "" + locationCurrentSphere.Z;
         switch (location) {
             case "101":
-                logger.info("Opposite is 121");
+                System.out.println("Opposite is 121");
+                //logger.info("Opposite is 121");
                 return board.getBoardLocation(1, 2, 1);
             case "211":
-                logger.info("Opposite is 011");
+                System.out.println("Opposite is 011");
+                //logger.info("Opposite is 011");
                 return board.getBoardLocation(0, 1, 1);
             case "121":
-                logger.info("Opposite is 101");
+                System.out.println("Opposite is 101");
+                //logger.info("Opposite is 101");
                 return board.getBoardLocation(1, 0, 1);
             case "011":
-                logger.info("Opposite is 211");
+                System.out.println("Opposite is 211");
+                //logger.info("Opposite is 211");
                 return board.getBoardLocation(2, 1, 1);
             default:
-                logger.info("Location is a corner of something went wrong with string comparison");
+                System.out.println("Location is a corner of something went wrong with string comparison");
+                //logger.info("Location is a corner of something went wrong with string comparison");
                 return null;
         }
 
@@ -260,17 +263,20 @@ public class StudentPlayerBestFit extends PylosPlayer {
         if (!possibleLocations_notMiddle.isEmpty()) {
             int rand = R.nextInt(possibleLocations_notMiddle.size());
             toLocation = possibleLocations_notMiddle.get(rand);
-            logger.info("RANDOM - NOT MIDDLE");
+            System.out.println("RANDOM - NOT MIDDLE");
+            //logger.info("RANDOM - NOT MIDDLE");
         }
         // IF ONLY MIDDLE IS AVAILABLE
         else if (!possibleLocations.isEmpty()) {
             int rand = R.nextInt(possibleLocations.size());
             toLocation = possibleLocations.get(rand);
-            logger.info("RANDOM - MIDDLE");
+            System.out.println("RANDOM - MIDDLE");
+            //logger.info("RANDOM - MIDDLE");
         }
         // NO LOCATIONS ARE FREE
         else {
-            logger.warning("Geen vrije plaatsen gevonden, andere speler wint");
+            System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
+            //logger.warning("Geen vrije plaatsen gevonden, andere speler wint");
         }
         return toLocation;
     }
@@ -447,7 +453,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
      */
     @Override
     public void doRemove(PylosGameIF game, PylosBoard board) {
-        logger.info("---------------------------------- doRemove");
+        //logger.info("---------------------------------- doRemove");
 
         //1. Init arraylist
         ArrayList<PylosSphere> possibleSpheresToRemove = new ArrayList<>(15);
@@ -493,7 +499,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
      */
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) {
-        logger.info("---------------------------------- doRemoveOrPass");
+        //logger.info("---------------------------------- doRemoveOrPass");
 
         double passFrequency = 0.0;
         if (R.nextDouble() <= passFrequency) game.pass();
