@@ -14,6 +14,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
     private PylosPlayerColor ppc_123, ppc_4 = null;
 
     private PylosLocation toLocation = null;
+    boolean temp=false;
 
     /*
     https://www.javatpoint.com/java-logger
@@ -38,20 +39,26 @@ public class StudentPlayerBestFit extends PylosPlayer {
     public void doMove(PylosGameIF game, PylosBoard board) {
         logger.info("---------------------------------- doMove");
 
-        // X. CHECKING FUNCTIONS
-        List<PylosLStructure> lStructures = getLStructures(board);
-        PylosLocation L2_middle_location = board.getBoardLocation(1, 1, 1); //COORDINATEN KLOPPEN
 
+        // X. CHECKING FUNCTIONS
+        List<PylosLStructure> lStructuresOwnColor = getLStructures(board, this.PLAYER_COLOR);
+        List<PylosLStructure> lStructuresOpponent = getLStructures(board, this.PLAYER_COLOR.other());
+
+        PylosLocation L2_middle_location = board.getBoardLocation(1, 1, 1); //COORDINATEN KLOPPEN
         // B. CHECK IF MIDDLE 4/4          : put on top
         if (getFreeLocationsMiddleSquare_L1(board) == 0) {
-            logger.info("Location in point B");
-            toLocation = board.getBoardLocation(1, 1, 1);
+            System.out.println("***********************************");
+            if (!temp) {
+                logger.info("Location in point B");
+                toLocation = L2_middle_location;
+                temp=true;
+            }
         }
 
         // A. CHECK FOR 3/4 SQUARES
-        else if (!lStructures.isEmpty()) {
-            //MAKE LIST OF EVERY COLOR
-            List<PylosLStructure> lStructuresOwnColor = new ArrayList<>();
+        //else if (!lStructures.isEmpty()) {
+        //MAKE LIST OF EVERY COLOR
+           /* List<PylosLStructure> lStructuresOwnColor = new ArrayList<>();
             List<PylosLStructure> lStructuresOpponent = new ArrayList<>();
             for (PylosLStructure l : lStructures) {
                 if (l.getColor() == this.PLAYER_COLOR) {
@@ -59,43 +66,45 @@ public class StudentPlayerBestFit extends PylosPlayer {
                 } else {
                     lStructuresOpponent.add(l);
                 }
-            }
+            }*/
 
-            // A1. 3/4 own color           : put fourth
-            if (!lStructuresOwnColor.isEmpty()) {
-                for (PylosLStructure structure : lStructuresOwnColor) {
-                    if (structure.getForthLocation() == null) {
-                        logger.info("Location in point A1");
-                        toLocation = lStructuresOwnColor.get(0).getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
-                        break;
-                    }
+        // A1. 3/4 own color           : put fourth
+        else if (!lStructuresOwnColor.isEmpty()) {
+            System.out.println("////////////////////////////////");
+
+            for (PylosLStructure structure : lStructuresOwnColor) {
+                if (structure.getForthLocation() == null) {
+                    logger.info("Location in point A1");
+                    toLocation = lStructuresOwnColor.get(0).getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
+                    break;
                 }
-
             }
-            //A2. 3/4 other color
-            else if (!lStructuresOpponent.isEmpty()) {
-                PylosLStructure tmpStructure = getLStructureWithFilledFourth(lStructuresOpponent);
-                if (tmpStructure != null) {
-                    // A21. 1/4 own color      : put on top
-                    logger.info("Location in point A21");
-                    toLocation = tmpStructure.getSquare().getTopLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH OWN COLOR
-                    if (tmpStructure.getSquare().getTopLocation().isUsable()) {
-                        toLocation = tmpStructure.getSquare().getTopLocation();
-                    } else {
-                        toLocation = getSemiRandomLocation(board); //TODO in principe moet hij opnieuw if structuur overlopen
-                    }
-                } else {
-                    //A22. 1/4 empty          : put forth (if not middle)
-                    tmpStructure = lStructuresOpponent.get(0);
-                    if (!tmpStructure.getSquare().equals(getMiddlePylosSquare_L1(board))) {
-                        logger.info("Location in point A22");
-                        toLocation = tmpStructure.getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY FORTH
-                    }
-                }
 
-
-            }
         }
+        //A2. 3/4 other color
+        else if (!lStructuresOpponent.isEmpty()) {
+            PylosLStructure tmpStructure = getLStructureWithFilledFourth(lStructuresOpponent);
+            if (tmpStructure != null) {
+                // A21. 1/4 own color      : put on top
+                logger.info("Location in point A21");
+                toLocation = tmpStructure.getSquare().getTopLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH OWN COLOR
+                if (tmpStructure.getSquare().getTopLocation().isUsable()) {
+                    toLocation = tmpStructure.getSquare().getTopLocation();
+                } else {
+                    toLocation = getSemiRandomLocation(board); //TODO in principe moet hij opnieuw if structuur overlopen
+                }
+            } else {
+                //A22. 1/4 empty          : put forth (if not middle)
+                tmpStructure = lStructuresOpponent.get(0);
+                if (!tmpStructure.getSquare().equals(getMiddlePylosSquare_L1(board))) {
+                    logger.info("Location in point A22");
+                    toLocation = tmpStructure.getForthLocation();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY FORTH
+                }
+            }
+
+
+        }
+        //}
 
         // C. CHECK IF L2 MIDDLE IS TAKEN
         else if (L2_middle_location.isUsed()) { //L2_middle_location: see top of method
@@ -229,6 +238,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     /**
      * Prefers location that are not in the middle
+     *
      * @param board
      * @return a valid PylosLocation or null if no location could be found
      */
@@ -353,6 +363,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
         lastPylosLocations.add(toLocation);
         // Get a reserve sphere
         PylosSphere reserveSphere = board.getReserve(this);
+
+        if (!toLocation.isUsable()) System.out.println("Error-------------------------" + toLocation);
         // Move the sphere
         game.moveSphere(reserveSphere, toLocation);
     }
@@ -368,11 +380,11 @@ public class StudentPlayerBestFit extends PylosPlayer {
     }
 
     /**
-     *
      * @param board
-     * @return List of LStructure
+     * @param pylosPlayerColor the color of the wanted LStructures
+     * @return List of LStructure of own color
      */
-    private List<PylosLStructure> getLStructures(PylosBoard board) {
+    private List<PylosLStructure> getLStructures(PylosBoard board, PylosPlayerColor pylosPlayerColor) {
         //1. RECEIVE ALL THE SQUARES
         PylosSquare[] allSquares = board.getAllSquares();
         //2. CAST TO LIST FOR EASY USE
@@ -386,7 +398,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
             //TODO eventueel inkorten
 
             // CHECK IF THE SQUARE HAS 3 OF A KIND
-            if (square.getInSquare(DARK) == 3) {
+            if (square.getInSquare(pylosPlayerColor) == 3) {
                 for (PylosLocation location : square.getLocations()) {
                     // EMPTY LOCATION
                     if (location.isUsable()) {
@@ -394,32 +406,14 @@ public class StudentPlayerBestFit extends PylosPlayer {
                         forthIsEmpty = true;
                         break;
                     }
-                    if (location.getSphere().PLAYER_COLOR == LIGHT) {
+                    if (location.getSphere().PLAYER_COLOR == pylosPlayerColor.other()) {
                         forth = location;
                         forthIsEmpty = false;
                         break;
                     }
                 }
-                allSquaresWith3Spehers.add(new PylosLStructure(square, DARK, forth, forthIsEmpty));
+                allSquaresWith3Spehers.add(new PylosLStructure(square, pylosPlayerColor, forth, forthIsEmpty));
             }
-            if (square.getInSquare(LIGHT) == 3) {
-                for (PylosLocation location : square.getLocations()) {
-                    // EMPTY LOCATION
-                    if (location.isUsable()) {
-                        forth = location;
-                        forthIsEmpty = true;
-                        break;
-                    }
-                    if (location.getSphere().PLAYER_COLOR == DARK) {
-                        forth = location;
-                        forthIsEmpty = false;
-                        break;
-                    }
-                }
-                allSquaresWith3Spehers.add(new PylosLStructure(square, LIGHT, forth, forthIsEmpty));
-            }
-
-
         }
 
         return allSquaresWith3Spehers;
