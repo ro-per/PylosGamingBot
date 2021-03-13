@@ -4,7 +4,9 @@ import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosGameIF;
 import be.kuleuven.pylos.game.PylosPlayerColor;
 
+import java.io.IOException;
 import java.util.Random;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +28,8 @@ public abstract class PylosPlayer {
         this.OBSERVER = observer;
         this.RANDOM = random;
         logger.setLevel(Level.FINEST);
+
+        //logger.addHandler(new FileHandler("C:/className.log"));
     }
 
     public abstract void doMove(PylosGameIF game, PylosBoard board) throws Exception;
