@@ -127,5 +127,8 @@ public class PylosLocation {
 	public String toStringCoords() {
 		return "BoardLocation[x=" + X + ", y=" + Y + ", z=" + Z + "]";
 	}
+	public String toStringCoordinates() {
+		return "("+ X + "," + Y + "," + Z + ")";
+	}
 
 }
