@@ -5,8 +5,6 @@ import be.kuleuven.pylos.game.PylosGameIF;
 import be.kuleuven.pylos.game.PylosPlayerColor;
 
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by Jan on 16/02/2015.
@@ -14,20 +12,15 @@ import java.util.logging.Logger;
 public abstract class PylosPlayer {
 
     private PylosPlayerObserver OBSERVER;
-    public static Random RANDOM;
+    public static Random PYLOS_PLAYER_RANDOM;
     public PylosPlayerColor PLAYER_COLOR;
     public PylosPlayer OTHER;
-    public static final Logger logger = Logger.getLogger(PylosPlayer.class.getName());
-
 
     public void init(PylosPlayerColor playerColor, PylosPlayer other, PylosPlayerObserver observer, Random random) {
         this.PLAYER_COLOR = playerColor;
         this.OTHER = other;
         this.OBSERVER = observer;
-        RANDOM = random;
-        logger.setLevel(Level.FINEST);
-
-        //logger.addHandler(new FileHandler("C:/className.log"));
+        PYLOS_PLAYER_RANDOM = new Random();
     }
 
     public abstract void doMove(PylosGameIF game, PylosBoard board) throws Exception;
@@ -37,7 +30,7 @@ public abstract class PylosPlayer {
     public abstract void doRemoveOrPass(PylosGameIF game, PylosBoard board) throws Exception;
 
     protected Random getRandom() {
-        return RANDOM;
+        return PYLOS_PLAYER_RANDOM;
     }
 
     protected PylosPlayerObserver getObserver() {

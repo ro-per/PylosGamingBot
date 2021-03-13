@@ -43,11 +43,7 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
         else if (toMaxThis.getMaxInSquare(this) == 3) {
             sphere = getMovableSphereOrReserve(toMaxThis, board);
             toLocation = toMaxThis;
-        }
-
-
-
-        else {
+        } else {
             sortZ_or_MaxInSquare(possibleLocations);
 
             for (PylosLocation pylosLocation : possibleLocations) {
@@ -63,7 +59,6 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
                 sphere = board.getReserve(this);
             }
         }
-
 
 
         game.moveSphere(sphere, toLocation);
@@ -98,7 +93,7 @@ public class StudentPlayerBestFit2 extends PylosPlayer {
 
             // Sort on Z
             if (compZ != 0) return compZ;
-            // Sort on max in square
+                // Sort on max in square
             else return -Integer.compare(getMaxInSquare(o1, this), getMaxInSquare(o2, this));
         });
     }
