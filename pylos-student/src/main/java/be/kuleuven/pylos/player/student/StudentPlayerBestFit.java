@@ -218,9 +218,9 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     private PylosLocation A1_getForthEmptyLocation(List<PylosLStructure> lStructuresOwnColor) {
         if (!lStructuresOwnColor.isEmpty()) {
-            for (PylosLStructure structure : lStructuresOwnColor) {
-                if (structure.isForthLocationEmpty()) {
-                    return lStructuresOwnColor.get(0).getPylosLocation4();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
+            for (PylosLStructure pls : lStructuresOwnColor) {
+                if (pls.isForthLocationEmpty()) {
+                    return pls.getPylosLocation4();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
                 }
             }
         }
