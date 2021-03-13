@@ -31,9 +31,34 @@ public class StudentPlayerBestFit extends PylosPlayer {
         PylosLocation A21 = A21_something(lStructuresOpponent);
         PylosLocation A22 = A22_something(lStructuresOpponent);
 
+        if(false){
 
+        }
+
+        // A1. 3/4 own color           : put fourth
+        else if (A1 != null) {
+            toLocation = A1;
+            cA1++;
+            System.out.println("Location in point A1");
+
+        }
+
+        // A2. 3/4 other color A22. 1/4 empty          : put forth (if not middle)
+        else if (A22 != null) {
+            toLocation = A22;
+            cA22++;
+            System.out.println("Location in point A22");
+
+        }
+        //  A2. 3/4 other color A21. 1/4 own color      : put on top
+        else if (A21 != null) {
+            toLocation = A21;
+            cA21++;
+            System.out.println("Location in point A21");
+
+        }
         // B. CHECK IF MIDDLE 4/4          : put on top
-        if (getMiddleSquareFillCount() == 4 && L1MiddleLocation.isUsable()) {
+        else if (getMiddleSquareFillCount() == 4 && L1MiddleLocation.isUsable()) {
             System.out.println("Location in point B");
             cB++;
             toLocation = L1MiddleLocation;
@@ -83,28 +108,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
                 }
             }
         }
-        // A1. 3/4 own color           : put fourth
-        else if (A1 != null) {
-            toLocation = A1;
-            cA1++;
-            System.out.println("Location in point A1");
 
-        }
-        //  A2. 3/4 other color
-        //  A22. 1/4 empty          : put forth (if not middle)
-        else if (A22 != null) {
-            toLocation = A22;
-            cA22++;
-            System.out.println("Location in point A22");
 
-        }
-        // A21. 1/4 own color      : put on top
-        else if (A21 != null) {
-            toLocation = A21;
-            cA21++;
-            System.out.println("Location in point A21");
-
-        }
 
         // D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED : put in middle square
         else if (getMiddleSquareFillCount() < 3) {
