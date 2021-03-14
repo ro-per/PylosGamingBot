@@ -4,13 +4,11 @@ import be.kuleuven.pylos.game.*;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 import java.util.*;
+import static be.kuleuven.pylos.player.student.CheckFactory.CheckFactory.*;
 
 public abstract class CheckFunction {
-    public final Random FACTORY_RANDOM;
 
-    public CheckFunction(Random random) {
-        this.FACTORY_RANDOM = random;
-    }
+    public CheckFunction() {}
 
     public abstract PylosLocation execute(PylosBoard board, PylosPlayer pp);
 

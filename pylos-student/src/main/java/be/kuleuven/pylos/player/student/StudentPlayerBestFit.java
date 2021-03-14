@@ -10,6 +10,7 @@ import be.kuleuven.pylos.player.student.CheckFactory.CheckFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class StudentPlayerBestFit extends PylosPlayer {
     private final List<PylosLocation> lastPylosLocations = new ArrayList<>(30);
@@ -21,37 +22,43 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
+        final List<PylosLocation> options = new ArrayList<>();
+
         // X. SAVE SOME STUFF FOR CONVENIENCE
         PylosLocation l1MiddleLocation = board.getBoardLocation(1, 1, 1); //COORDINATEN KLOPPEN
         localBoard = board;
 
         // B. CHECK IF MIDDLE 4/4          : put on top
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("B").execute(board, this);
-
-
+        options.add(checkFactory.getCheckFunction("B").execute(board, this));
         // C. L1 MIDDLE IS TAKEN
         //C1. MIDDLE SPHERE IS OWN COLOR
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("C1").execute(board, this);
+        options.add(checkFactory.getCheckFunction("C1").execute(board, this));
         //C2. MIDDLE SPHERE IS OTHER COLOR
         //C21. ONE (OR MORE) BLACK SPHERES ON L2 : try to put on opposite side
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("C21").execute(board, this);
+        options.add(checkFactory.getCheckFunction("C21").execute(board, this));
         //C22. NO/ MULTIPLE BLACK SPHERES ON L2 : try put on middle of border
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("C22").execute(board, this);
+        options.add(checkFactory.getCheckFunction("C22").execute(board, this));
         // A1. 3/4 own color           : put fourth
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("A1").execute(board, this);
+        options.add(checkFactory.getCheckFunction("A1").execute(board, this));
         //  A2. 3/4 other color
         //  A22. 1/4 empty          : put forth (if not middle)
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("A22").execute(board, this);
+        options.add(checkFactory.getCheckFunction("A22").execute(board, this));
         // A21. 1/4 own color      : put on top
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("A21").execute(board, this);
+        options.add(checkFactory.getCheckFunction("A21").execute(board, this));
         // D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED : put in middle square
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("D").execute(board, this);
+        options.add(checkFactory.getCheckFunction("D").execute(board, this));
         // E. IF NO MOVES COULD BE PERFORMED   : put random, same as random fit
-        if (toLocation == null) toLocation = checkFactory.getCheckFunction("A1").execute(board, this);
+        options.add(checkFactory.getCheckFunction("E").execute(board, this));
+
+
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + options);
+        // remove null option1s
+        options.removeIf(Objects::isNull);
+        System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" + options);
 
         //System.out.println("COUNTERS ----------------------" + cA1 + " " + cA21 + " " + cA22 + " " + cB + " " + cC1 + " " + cC211 + " " + cC212 + " " + cC22 + " " + cD + " " + cE);
         //Y. PERFORM MOVE TO LOCATION RETRIEVED FROM A-E
-        performMove(game, toLocation);
+        performMove(game, options.get(0));
     }
 
     /* *********** PERFORM MOVE ************/

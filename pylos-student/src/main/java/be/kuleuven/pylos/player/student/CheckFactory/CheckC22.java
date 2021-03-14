@@ -7,8 +7,8 @@ import be.kuleuven.pylos.player.PylosPlayer;
 import java.util.Random;
 
 public class CheckC22 extends CheckFunction {
-    public CheckC22(Random random) {
-        super(random);
+    public CheckC22( ) {
+        super();
     }
 
     @Override

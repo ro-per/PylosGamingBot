@@ -9,9 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static be.kuleuven.pylos.player.student.CheckFactory.CheckFactory.*;
+
 public class CheckE extends CheckFunction {
-    public CheckE(Random random) {
-        super(random);
+    public CheckE() {
+        super();
     }
 
     @Override

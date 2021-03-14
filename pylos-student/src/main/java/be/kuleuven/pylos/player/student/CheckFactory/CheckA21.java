@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Random;
 
 public class CheckA21 extends CheckFunction {
-    public CheckA21(Random random) {
-        super(random);
+    public CheckA21( ) {
+        super();
     }
 
     @Override

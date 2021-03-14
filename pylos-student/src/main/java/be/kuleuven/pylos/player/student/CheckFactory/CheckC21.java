@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 public class CheckC21 extends CheckFunction {
-    public CheckC21(Random random) {
-        super(random);
+    public CheckC21( ) {
+        super();
     }
 
     @Override
