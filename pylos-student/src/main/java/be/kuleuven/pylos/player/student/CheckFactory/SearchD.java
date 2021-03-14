@@ -5,7 +5,7 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 public class SearchD extends SearchLocation {
-    public SearchD( ) {
+    public SearchD() {
         super();
     }
 
@@ -13,10 +13,7 @@ public class SearchD extends SearchLocation {
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         if (getMiddleSquareFillCount(board) < 3) {
             for (PylosLocation pl : getL0MiddleSquareLocations(board)) {
-                if (pl.isUsable()) {
-                    System.out.println("Location in point D");
-                    return pl;
-                }
+                if (pl.isUsable()) return pl;
             }
         }
         return null;

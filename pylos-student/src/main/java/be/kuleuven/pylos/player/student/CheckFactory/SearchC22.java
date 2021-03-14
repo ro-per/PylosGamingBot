@@ -5,18 +5,14 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 public class SearchC22 extends SearchLocation {
-    public SearchC22( ) {
+    public SearchC22() {
         super();
     }
 
     @Override
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
-        PylosLocation l1MiddleLocation = board.getBoardLocation(1, 1, 1); //COORDINATEN KLOPPEN
-
-        if (l1MiddleLocation.isUsed()) {
-            System.out.println("Location in point C22");
-            return getC1Location(board);
-        }
+        PylosLocation l1MiddleLocation = board.getBoardLocation(1, 1, 1);
+        if (l1MiddleLocation.isUsed()) return getC1Location(board);
         return null;
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory.*;
+import static be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory.FACTORY_RANDOM;
 
 public class SearchE extends SearchLocation {
     public SearchE() {
@@ -17,7 +17,6 @@ public class SearchE extends SearchLocation {
 
     @Override
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
-        System.out.println("Location in point E");
         //1. Init arraylist
         List<PylosLocation> possibleLocations = new ArrayList<>(30);
         List<PylosLocation> possibleLocations_notMiddle = new ArrayList<>(30);
@@ -35,17 +34,11 @@ public class SearchE extends SearchLocation {
         if (!possibleLocations_notMiddle.isEmpty()) {
             int rand = FACTORY_RANDOM.nextInt(possibleLocations_notMiddle.size());
             toLocation = possibleLocations_notMiddle.get(rand);
-            //System.out.println("RANDOM - NOT MIDDLE");
         }
         // IF ONLY MIDDLE IS AVAILABLE
         else if (!possibleLocations.isEmpty()) {
             int rand = FACTORY_RANDOM.nextInt(possibleLocations.size());
             toLocation = possibleLocations.get(rand);
-            //System.out.println("RANDOM - MIDDLE");
-        }
-        // NO LOCATIONS ARE FREE
-        else {
-            System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
         }
         return toLocation;
     }

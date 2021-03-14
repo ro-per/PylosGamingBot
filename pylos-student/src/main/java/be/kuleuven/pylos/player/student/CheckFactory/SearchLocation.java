@@ -129,22 +129,17 @@ public abstract class SearchLocation {
         String location = locationCurrentSphere.X + "" + locationCurrentSphere.Y + "" + locationCurrentSphere.Z;
         switch (location) {
             case "101":
-                System.out.println("Opposite is 121");
                 return board.getBoardLocation(1, 2, 1);
             case "211":
-                System.out.println("Opposite is 011");
                 return board.getBoardLocation(0, 1, 1);
             case "121":
-                System.out.println("Opposite is 101");
                 return board.getBoardLocation(1, 0, 1);
             case "011":
-                System.out.println("Opposite is 211");
                 return board.getBoardLocation(2, 1, 1);
             default:
                 System.out.println("Location is a corner of something went wrong with string comparison");
                 return null;
         }
-
     }
 
     List<PylosLocation> getUsedLocationsOnL1(PylosPlayer pp, PylosBoard board) {
@@ -176,11 +171,6 @@ public abstract class SearchLocation {
         if (!possibleLocations.isEmpty()) {
             int rand = FACTORY_RANDOM.nextInt(possibleLocations.size());
             toLocation = possibleLocations.get(rand);
-            //System.out.println("RANDOM - MIDDLE");
-        }
-        // NO LOCATIONS ARE FREE
-        else {
-            System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
         }
         return toLocation;
     }

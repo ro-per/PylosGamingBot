@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class StudentPlayerBestFit extends PylosPlayer {
-    private final List<PylosLocation> lastPylosLocations = new ArrayList<>(30);
+    private final List<PylosSphere> lastPylosSpheres = new ArrayList<>(30);
     private final SearchLocationFactory searchLocationFactory = new SearchLocationFactory(PYLOS_PLAYER_RANDOM);
 
     /* ----------------------------------------- DO MOVE -----------------------------------------*/
@@ -31,11 +31,11 @@ public class StudentPlayerBestFit extends PylosPlayer {
         options.add(searchLocationFactory.getCheckFunction("D").getLocation(board, this));
         options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
         options.removeIf(Objects::isNull);
+        if(options.isEmpty()){
+            System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
+        }
         performMove(game,board, options.get(0));
     }
-
-    /* *********** PERFORM MOVE ************/
-
     /**
      * put reserve spere on 'toLocation' and add location to list of last locations
      *  @param game
@@ -44,7 +44,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
      */
     private void performMove(PylosGameIF game, PylosBoard board, PylosLocation toLocation) {
         // Add location to last locations
-        lastPylosLocations.add(toLocation);
+        lastPylosSpheres.add(toLocation.getSphere());
         // Get a reserve sphere
         PylosSphere reserveSphere = board.getReserve(this);
 
@@ -64,7 +64,6 @@ public class StudentPlayerBestFit extends PylosPlayer {
      */
     @Override
     public void doRemove(PylosGameIF game, PylosBoard board) {
-
         //1. Init arraylist
         ArrayList<PylosSphere> possibleSpheresToRemove = new ArrayList<>(15);
         //2. Add all all 15 spheres of 'player'
@@ -74,9 +73,9 @@ public class StudentPlayerBestFit extends PylosPlayer {
         //4. Check if a sphere can be removed
         if (!possibleSpheresToRemove.isEmpty()) {
             PylosSphere sphereToRemove;
-            double lastFrequency = 0.0;
-            if (PYLOS_PLAYER_RANDOM.nextDouble() <= lastFrequency) sphereToRemove = doRemoveLast();
-            else sphereToRemove = doRemoveRandom(possibleSpheresToRemove); //TODO use lastPylosLocations
+            double lastFrequency = 0.5; //TODO
+            if (PYLOS_PLAYER_RANDOM.nextDouble() <= lastFrequency) sphereToRemove = doRemoveLast(possibleSpheresToRemove);
+            else sphereToRemove = doRemoveRandom(possibleSpheresToRemove);
             game.removeSphere(sphereToRemove);
         }
         //5. If no spheres can be removed (second remove), pass
@@ -87,10 +86,11 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     /**
      * @return last sphere (put on board) from possible spheres to remove
+     * @param possibleSpheresToRemove
      */
-    private PylosSphere doRemoveLast() {
-        PylosLocation pl = lastPylosLocations.get(lastPylosLocations.size() - 1); // Take last
-        return pl.getSphere();
+    private PylosSphere doRemoveLast(ArrayList<PylosSphere> possibleSpheresToRemove) {
+        Collections.reverse(possibleSpheresToRemove);
+        return possibleSpheresToRemove.get(0); // Take last
     }
 
     /**
@@ -98,9 +98,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
      * @return random sphere from possible spheres to remove
      */
     private PylosSphere doRemoveRandom(ArrayList<PylosSphere> possibleSpheresToRemove) {
-        // Get Random sphere from possibilities
         int rand = PYLOS_PLAYER_RANDOM.nextInt(possibleSpheresToRemove.size());
-        //TODO check if not middle
         return possibleSpheresToRemove.get(rand);
     }
     /* ----------------------------------------- DO REMOVE OR PASS -----------------------------------------*/
