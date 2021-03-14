@@ -7,17 +7,16 @@ import be.kuleuven.pylos.player.PylosPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
-import static be.kuleuven.pylos.player.student.CheckFactory.CheckFactory.*;
+import static be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory.*;
 
-public class CheckE extends CheckFunction {
-    public CheckE() {
+public class SearchE extends SearchLocation {
+    public SearchE() {
         super();
     }
 
     @Override
-    public PylosLocation execute(PylosBoard board, PylosPlayer pp) {
+    public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         System.out.println("Location in point E");
         //1. Init arraylist
         List<PylosLocation> possibleLocations = new ArrayList<>(30);

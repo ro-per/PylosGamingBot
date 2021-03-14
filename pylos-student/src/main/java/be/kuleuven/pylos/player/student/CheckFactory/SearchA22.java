@@ -6,15 +6,14 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 import java.util.List;
-import java.util.Random;
 
-public class CheckA22 extends CheckFunction {
-    public CheckA22( ) {
+public class SearchA22 extends SearchLocation {
+    public SearchA22( ) {
         super();
     }
 
     @Override
-    public PylosLocation execute(PylosBoard board, PylosPlayer pp) {
+    public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         List<PylosLStructure> lStructuresOpponent = getLStructureList(pp.PLAYER_COLOR.other(), board);
         PylosLocation A22 = A22_something(lStructuresOpponent, board);
         if (A22 != null) {

@@ -4,13 +4,31 @@ import be.kuleuven.pylos.game.*;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 import java.util.*;
-import static be.kuleuven.pylos.player.student.CheckFactory.CheckFactory.*;
 
-public abstract class CheckFunction {
+import static be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory.*;
 
-    public CheckFunction() {}
+public abstract class SearchLocation {
 
-    public abstract PylosLocation execute(PylosBoard board, PylosPlayer pp);
+    /*
+    A. Check for 3/4 Square
+        A1. 3/4 own color                           : put fourth
+        A2. 3/4 other color
+            A22. 1/4 empty                          : put forth (if not middle)
+            A21. 1/4 own color                      : put on top
+    B. CHECK IF MIDDLE 4/4                          : put on top
+    C. L1 MIDDLE IS TAKEN
+        C1. MIDDLE SPHERE IS OWN COLOR              : try put on middle of border
+        C2. MIDDLE SPHERE IS OTHER COLOR
+            C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
+            C22. NO/ MULTIPLE BLACK SPHERES ON L2   : try put on middle of border
+    D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED  : put in middle square
+    E. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
+    */
+
+    public SearchLocation() {
+    }
+
+    public abstract PylosLocation getLocation(PylosBoard board, PylosPlayer pp);
 
     /* *********** GET LOCATIONS ************/
     List<PylosLocation> getL0MiddleSquareLocations(PylosBoard board) {

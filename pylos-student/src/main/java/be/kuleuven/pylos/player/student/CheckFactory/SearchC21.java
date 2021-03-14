@@ -5,15 +5,14 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 import java.util.List;
-import java.util.Random;
 
-public class CheckC21 extends CheckFunction {
-    public CheckC21( ) {
+public class SearchC21 extends SearchLocation {
+    public SearchC21( ) {
         super();
     }
 
     @Override
-    public PylosLocation execute(PylosBoard board, PylosPlayer pp) {
+    public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         List<PylosLocation> usedLocationsOnL1 = getUsedLocationsOnL1(pp, board);
         PylosLocation l1MiddleLocation = board.getBoardLocation(1, 1, 1); //COORDINATEN KLOPPEN
 
