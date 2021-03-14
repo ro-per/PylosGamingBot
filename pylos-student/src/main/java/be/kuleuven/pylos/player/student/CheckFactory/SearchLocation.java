@@ -137,7 +137,7 @@ public abstract class SearchLocation {
             case "011":
                 return board.getBoardLocation(2, 1, 1);
             default:
-                System.out.println("Location is a corner of something went wrong with string comparison");
+                //System.out.println("Location is a corner of something went wrong with string comparison");
                 return null;
         }
     }

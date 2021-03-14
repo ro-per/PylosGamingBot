@@ -21,13 +21,15 @@ public class StudentPlayerBestFit extends PylosPlayer {
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
         final List<PylosLocation> options = new ArrayList<>();
+        options.add(searchLocationFactory.getCheckFunction("A22").getLocation(board, this));
+        options.add(searchLocationFactory.getCheckFunction("A21").getLocation(board, this));
+        options.add(searchLocationFactory.getCheckFunction("A1").getLocation(board, this));
+
+
         options.add(searchLocationFactory.getCheckFunction("B").getLocation(board, this));
         options.add(searchLocationFactory.getCheckFunction("C1").getLocation(board, this));
         options.add(searchLocationFactory.getCheckFunction("C21").getLocation(board, this));
         options.add(searchLocationFactory.getCheckFunction("C22").getLocation(board, this));
-        options.add(searchLocationFactory.getCheckFunction("A1").getLocation(board, this));
-        options.add(searchLocationFactory.getCheckFunction("A22").getLocation(board, this));
-        options.add(searchLocationFactory.getCheckFunction("A21").getLocation(board, this));
         options.add(searchLocationFactory.getCheckFunction("D").getLocation(board, this));
         options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
         options.removeIf(Objects::isNull);
