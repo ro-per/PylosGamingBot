@@ -28,15 +28,6 @@ public class SearchLocationA1 extends SearchLocation {
                 }
             }
         }
-        List<PylosLocation> temp2 = equalsMiddleLocations(board, temp1);
-        if (!temp2.isEmpty()) {
-            return temp2.get(0);
-        }
-        else if(!temp1.isEmpty()) {
-            return temp1.get(0);
-        }
-
-        return null;
-
+        return equalsMiddleLocations(board, temp1);
     }
 }

@@ -5,6 +5,7 @@ import be.kuleuven.pylos.game.PylosLStructure;
 import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchLocationA22 extends SearchLocation {
@@ -19,14 +20,16 @@ public class SearchLocationA22 extends SearchLocation {
     }
 
     private PylosLocation A22_something(List<PylosLStructure> lStructuresOpponent, PylosBoard board) {
+        List<PylosLocation> temp1 = new ArrayList<>();
         List<PylosLStructure> A22 = getLstructureSpecial(lStructuresOpponent, true);
         if (!A22.isEmpty()) {
             for (PylosLStructure pls : A22) {
                 if (!pls.getPylosSquare().equals(getL0MiddleSquare(board))) {
-                    return pls.getPylosLocation4();
+                    temp1.add(pls.getPylosLocation4());
                 }
             }
         }
-        return null;
+        return equalsMiddleLocations(board, temp1);
+
     }
 }

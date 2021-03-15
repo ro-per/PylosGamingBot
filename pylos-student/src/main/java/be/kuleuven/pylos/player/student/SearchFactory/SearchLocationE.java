@@ -37,11 +37,12 @@ public class SearchLocationE extends SearchLocation {
         System.out.println("");*/
 
         // CHECK FOR USABLE LOCATION
+        List<PylosLocation> temp1 = new ArrayList<>();
         for (PylosSquare ps : squares) {
             for (PylosLocation pl : ps.getLocations()) {
-                if (pl.isUsable()) return pl;
+                if (pl.isUsable()) temp1.add(pl);
             }
         }
-        return null;
+        return equalsMiddleLocations(board, temp1);
     }
 }

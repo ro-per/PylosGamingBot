@@ -56,21 +56,29 @@ public abstract class SearchLocation {
         return middleLocations;
     }
 
-    List<PylosLocation> equalsMiddleLocations(PylosBoard board, List<PylosLocation> listToCheck) {
+    PylosLocation equalsMiddleLocations(PylosBoard board, List<PylosLocation> listToCheck) {
 
         List<PylosLocation> middleLocations = getL0MiddleSquareLocations(board);
         List<PylosLocation> temp = new ArrayList<>();
 
         for (PylosLocation pl1 : listToCheck) {
+            boolean b = false;
             for (PylosLocation pl2 : middleLocations) {
                 if (!equalLocations(pl1, pl2)) {
                     temp.add(pl1);
-                } else {
                     break;
                 }
             }
         }
-        return temp;
+        //Collections.shuffle(temp);
+        if (!temp.isEmpty()) {
+            System.out.println("--------------------------------------------");
+            return temp.get(0);
+        } else if (!listToCheck.isEmpty()) {
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+            return listToCheck.get(0);
+        }
+        return null;
     }
 
     private List<PylosLocation> getL1BorderMiddleLocations(PylosBoard board) {
@@ -246,8 +254,6 @@ public abstract class SearchLocation {
         }
         return pylosLStructures;
     }
-
-
 
 
     boolean isL0BorderMiddleLocation(PylosLocation location, PylosBoard board) {
