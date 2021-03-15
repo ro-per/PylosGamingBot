@@ -56,6 +56,23 @@ public abstract class SearchLocation {
         return middleLocations;
     }
 
+    List<PylosLocation> equalsMiddleLocations(PylosBoard board, List<PylosLocation> listToCheck) {
+
+        List<PylosLocation> middleLocations = getL0MiddleSquareLocations(board);
+        List<PylosLocation> temp = new ArrayList<>();
+
+        for (PylosLocation pl1 : listToCheck) {
+            for (PylosLocation pl2 : middleLocations) {
+                if (!equalLocations(pl1, pl2)) {
+                    temp.add(pl1);
+                } else {
+                    break;
+                }
+            }
+        }
+        return temp;
+    }
+
     private List<PylosLocation> getL1BorderMiddleLocations(PylosBoard board) {
         List<PylosLocation> middleLocations = new ArrayList<>();
         middleLocations.add(board.getBoardLocation(1, 0, 1));
@@ -230,17 +247,7 @@ public abstract class SearchLocation {
         return pylosLStructures;
     }
 
-    PylosLocation A1_getForthEmptyLocation(List<PylosLStructure> lStructuresOwnColor) {
-        if (!lStructuresOwnColor.isEmpty()) {
-            for (PylosLStructure pls : lStructuresOwnColor) {
-                if (pls.isForthLocationEmpty()) {
-                    return pls.getPylosLocation4();//TODO: MAYBE OTHER L STRUCTURE IS BETTER? FOR NOW FIRST ONE WITH EMPTY SPOT
-                }
-            }
-        }
-        return null;
 
-    }
 
 
     boolean isL0BorderMiddleLocation(PylosLocation location, PylosBoard board) {

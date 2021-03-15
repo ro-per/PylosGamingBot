@@ -24,10 +24,14 @@ public class StudentPlayerBestFit extends PylosPlayer {
     }
 
     /* ----------------------------------------- DO MOVE -----------------------------------------*/
+    private boolean equalLocations(PylosLocation l1, PylosLocation l2) {
+        return l1.X == l2.X && l1.Y == l2.Y && l1.Z == l2.Z;
+    }
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
         StringBuilder sb = new StringBuilder();
+        List<PylosLocation> list = new ArrayList<>();
 
         for (SearchLocation sl : searchLocationFactory.getSearchLocationList()) {
             sb.append(sl.getIdentifier()).append("_");
@@ -35,10 +39,14 @@ public class StudentPlayerBestFit extends PylosPlayer {
             if (pl != null) {
                 String id = sl.getIdentifier();
                 counters.put(id, counters.get(id) + 1);
-                toLocation = pl;
-                break;
+                //toLocation = pl;
+                list.add(pl);
+                //break;
             }
         }
+        toLocation = list.get(0);
+
+
 
         System.out.println("Location option list" + sb.toString());
 
