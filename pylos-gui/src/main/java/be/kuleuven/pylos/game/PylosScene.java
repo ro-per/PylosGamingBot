@@ -160,7 +160,7 @@ public class PylosScene {
 		new Transition() {
 			{
 				int duration = MAX_TRANSITION_DURATION - (int) (controller.getAnimationSpeed() / 100 * (MAX_TRANSITION_DURATION - MIN_TRANSITION_DURATION));
-				setCycleDuration(Duration.millis(duration));
+				setCycleDuration(Duration.millis(duration*5)); //TODO HIER
 				setOnFinished(evt -> latch.countDown());
 			}
 

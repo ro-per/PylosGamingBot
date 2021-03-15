@@ -22,6 +22,7 @@ public class SearchLocationFactory {
         checkFunctions.put("D", new SearchD());
         checkFunctions.put("E", new SearchE());
         checkFunctions.put("F", new SearchF());
+        checkFunctions.put("G", new SearchG());
 
     }
 
