@@ -1,4 +1,4 @@
-package be.kuleuven.pylos.player.student.CheckFactory;
+package be.kuleuven.pylos.player.student.SearchFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ public class SearchLocationFactory {
     public static final Random FACTORY_RANDOM = new Random();
 
 
-    public SearchLocationFactory(Random FACTORY_RANDOM) {
+    public SearchLocationFactory() {
         checkFunctions = new HashMap<>();
         checkFunctions.put("B", new SearchB());
         checkFunctions.put("C1", new SearchC1());
@@ -21,6 +21,8 @@ public class SearchLocationFactory {
         checkFunctions.put("A21", new SearchA21());
         checkFunctions.put("D", new SearchD());
         checkFunctions.put("E", new SearchE());
+        checkFunctions.put("F", new SearchF());
+
     }
 
     public SearchLocation getCheckFunction(String f) {

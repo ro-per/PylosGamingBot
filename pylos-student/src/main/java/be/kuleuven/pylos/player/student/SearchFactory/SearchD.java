@@ -1,4 +1,4 @@
-package be.kuleuven.pylos.player.student.CheckFactory;
+package be.kuleuven.pylos.player.student.SearchFactory;
 
 import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosLocation;

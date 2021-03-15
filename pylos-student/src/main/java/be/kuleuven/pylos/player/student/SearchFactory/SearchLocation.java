@@ -1,11 +1,11 @@
-package be.kuleuven.pylos.player.student.CheckFactory;
+package be.kuleuven.pylos.player.student.SearchFactory;
 
 import be.kuleuven.pylos.game.*;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 import java.util.*;
 
-import static be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory.*;
+import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.*;
 
 public abstract class SearchLocation {
 
@@ -15,6 +15,7 @@ public abstract class SearchLocation {
         A2. 3/4 other color
             A22. 1/4 empty                          : put forth (if not middle)
             A21. 1/4 own color                      : put on top
+
     B. CHECK IF MIDDLE 4/4                          : put on top
     C. L1 MIDDLE IS TAKEN
         C1. MIDDLE SPHERE IS OWN COLOR              : try put on middle of border
@@ -22,7 +23,9 @@ public abstract class SearchLocation {
             C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
             C22. NO/ MULTIPLE BLACK SPHERES ON L2   : try put on middle of border
     D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED  : put in middle square
-    E. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
+
+    E. SEARCH FOR SQUARE REPRESENTED MOST           : put there
+    F. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
     */
 
     public SearchLocation() {

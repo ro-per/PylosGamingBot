@@ -5,42 +5,75 @@ import be.kuleuven.pylos.game.PylosGameIF;
 import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
-import be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory;
+import be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.security.KeyPair;
+import java.util.*;
 
 public class StudentPlayerBestFit extends PylosPlayer {
     private final List<PylosSphere> lastPylosSpheres = new ArrayList<>(30);
-    private final SearchLocationFactory searchLocationFactory = new SearchLocationFactory(PYLOS_PLAYER_RANDOM);
+    private final SearchLocationFactory searchLocationFactory = new SearchLocationFactory();
 
     /* ----------------------------------------- DO MOVE -----------------------------------------*/
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
         final List<PylosLocation> options = new ArrayList<>();
-        options.add(searchLocationFactory.getCheckFunction("A22").getLocation(board, this));
-        options.add(searchLocationFactory.getCheckFunction("A21").getLocation(board, this));
-        options.add(searchLocationFactory.getCheckFunction("A1").getLocation(board, this));
 
+        int count = 0;
+        options.add(searchLocationFactory.getCheckFunction("A22").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("A22");
+        count++;
+
+        options.add(searchLocationFactory.getCheckFunction("A21").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("A21");
+        count++;
+
+        options.add(searchLocationFactory.getCheckFunction("A1").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("A1");
+        count++;
 
         options.add(searchLocationFactory.getCheckFunction("B").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("B");
+        count++;
+
         options.add(searchLocationFactory.getCheckFunction("C1").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("C1");
+        count++;
+
         options.add(searchLocationFactory.getCheckFunction("C21").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("C21");
+        count++;
+
         options.add(searchLocationFactory.getCheckFunction("C22").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("C22");
+        count++;
+
         options.add(searchLocationFactory.getCheckFunction("D").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("D");
+        count++;
+
         options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("E");
+        count++;
+
+        options.add(searchLocationFactory.getCheckFunction("F").getLocation(board, this));
+        if(options.get(count)!=null)System.out.println("F");
+        count++;
+
         options.removeIf(Objects::isNull);
-        if(options.isEmpty()){
+
+
+        if (options.isEmpty()) {
             System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
         }
-        performMove(game,board, options.get(0));
+        performMove(game, board, options.get(0));
     }
+
     /**
      * put reserve spere on 'toLocation' and add location to list of last locations
-     *  @param game
+     *
+     * @param game
      * @param board
      * @param toLocation location to which a sphere must be put
      */
@@ -76,7 +109,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
         if (!possibleSpheresToRemove.isEmpty()) {
             PylosSphere sphereToRemove;
             double lastFrequency = 0.5; //TODO
-            if (PYLOS_PLAYER_RANDOM.nextDouble() <= lastFrequency) sphereToRemove = doRemoveLast(possibleSpheresToRemove);
+            if (PYLOS_PLAYER_RANDOM.nextDouble() <= lastFrequency)
+                sphereToRemove = doRemoveLast(possibleSpheresToRemove);
             else sphereToRemove = doRemoveRandom(possibleSpheresToRemove);
             game.removeSphere(sphereToRemove);
         }
@@ -87,8 +121,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
     }
 
     /**
-     * @return last sphere (put on board) from possible spheres to remove
      * @param possibleSpheresToRemove
+     * @return last sphere (put on board) from possible spheres to remove
      */
     private PylosSphere doRemoveLast(ArrayList<PylosSphere> possibleSpheresToRemove) {
         Collections.reverse(possibleSpheresToRemove);
@@ -111,7 +145,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
      */
     @Override
     public void doRemoveOrPass(PylosGameIF game, PylosBoard board) {
-        double passFrequency = 0.0;
+        double passFrequency = 0.05;
         if (PYLOS_PLAYER_RANDOM.nextDouble() <= passFrequency) game.pass();
         else doRemove(game, board);
     }

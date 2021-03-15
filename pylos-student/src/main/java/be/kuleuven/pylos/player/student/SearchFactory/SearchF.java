@@ -1,4 +1,4 @@
-package be.kuleuven.pylos.player.student.CheckFactory;
+package be.kuleuven.pylos.player.student.SearchFactory;
 
 import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosLocation;
@@ -8,13 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static be.kuleuven.pylos.player.student.CheckFactory.SearchLocationFactory.FACTORY_RANDOM;
+import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.FACTORY_RANDOM;
 
-public class SearchE extends SearchLocation {
-    public SearchE() {
-        super();
-    }
-
+public class SearchF extends SearchLocation {
     @Override
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         //1. Init arraylist
