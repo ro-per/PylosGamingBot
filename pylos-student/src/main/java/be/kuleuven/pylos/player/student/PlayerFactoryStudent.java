@@ -37,11 +37,5 @@ public class PlayerFactoryStudent extends PylosPlayerFactory {
                 return new StudentPlayerBestFit();
             }
         });
-        add(new PylosPlayerType("Student - Best Fit 2") {
-            @Override
-            public PylosPlayer create() {
-                return new StudentPlayerBestFit2();
-            }
-        });
     }
 }
