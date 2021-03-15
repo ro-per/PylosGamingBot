@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PylosMain {
-    private final Random R = new Random(-1); //TODO SEED PYLOS
-    public static List<Integer> RESULTS = new ArrayList<>();
+    private final Random R = new Random(); //TODO SEED PYLOS
 
     public PylosMain() {
     }
@@ -27,7 +26,6 @@ public class PylosMain {
     public void startSingleGame(PylosPlayer player1, PylosPlayer player2) throws Exception {
         PylosBoard pylosBoard = new PylosBoard();
         PylosGame pylosGame = new PylosGame(pylosBoard, player1, player2, R, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE);
-
         pylosGame.play();
     }
 
@@ -37,7 +35,6 @@ public class PylosMain {
 
     public static void main(String[] args) throws Exception {
         /* !!! vm argument !!! -ea */
-        //PylosPlayer player1 = new PylosPlayerMiniMax(2);
         PylosPlayer player1 = new PylosPlayerBestFit();
         PylosPlayer player2 = new StudentPlayerBestFit();
 

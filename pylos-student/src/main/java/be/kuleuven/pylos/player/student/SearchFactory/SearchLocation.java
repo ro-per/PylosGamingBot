@@ -3,27 +3,30 @@ package be.kuleuven.pylos.player.student.SearchFactory;
 import be.kuleuven.pylos.game.*;
 import be.kuleuven.pylos.player.PylosPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.*;
+import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.FACTORY_RANDOM;
 
 public abstract class SearchLocation {
     /*
     A. Check for 3/4 Square
-        x A1. 3/4 own color                           : put fourth
+        A1. 3/4 own color                           : put fourth
         A2. 3/4 other color
-            x A22. 1/4 empty                          : put forth (if not middle)
+            A22. 1/4 empty                          : put forth (if not middle)
             A21. 1/4 own color                      : put on top
 
     B. CHECK IF MIDDLE 4/4                          : put on top
     C. L1 MIDDLE IS TAKEN
-        x C1. MIDDLE SPHERE IS OWN COLOR              : try put on middle of border
+        C1. MIDDLE SPHERE IS OWN COLOR              : try put on middle of border
         C2. MIDDLE SPHERE IS OTHER COLOR
-            x C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
+            C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
             C22. NO/ MULTIPLE BLACK SPHERES ON L2   : try put on middle of border
     D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED  : put in middle square
 
-    E. x SEARCH FOR SQUARE REPRESENTED MOST           : put there
+    E. SEARCH FOR SQUARE REPRESENTED MOST           : put there
     F. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
     G. PUTS AS HIGH AS POSSIBLE
     */
@@ -40,10 +43,6 @@ public abstract class SearchLocation {
         return identifier;
     }
 
-    public int getCounter() {
-        return counter;
-    }
-
     public abstract PylosLocation getLocation(PylosBoard board, PylosPlayer pp);
 
     /* *********** GET LOCATIONS ************/
@@ -57,12 +56,10 @@ public abstract class SearchLocation {
     }
 
     PylosLocation equalsMiddleLocations(PylosBoard board, List<PylosLocation> listToCheck) {
-
         List<PylosLocation> middleLocations = getL0MiddleSquareLocations(board);
         List<PylosLocation> temp = new ArrayList<>();
 
         for (PylosLocation pl1 : listToCheck) {
-            boolean b = false;
             for (PylosLocation pl2 : middleLocations) {
                 if (!equalLocations(pl1, pl2)) {
                     temp.add(pl1);
@@ -70,12 +67,9 @@ public abstract class SearchLocation {
                 }
             }
         }
-        //Collections.shuffle(temp);
         if (!temp.isEmpty()) {
-            System.out.println("--------------------------------------------");
             return temp.get(0);
         } else if (!listToCheck.isEmpty()) {
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
             return listToCheck.get(0);
         }
         return null;
@@ -100,7 +94,7 @@ public abstract class SearchLocation {
     }
 
     PylosSquare getL0MiddleSquare(PylosBoard board) {
-        List<PylosSquare> allSquares = Arrays.asList(board.getAllSquares()); //TODO kan ook als gewone array gebruikt worden
+        List<PylosSquare> allSquares = Arrays.asList(board.getAllSquares());
         List<PylosLocation> middleLocations = getL0MiddleSquareLocations(board);
 
         PylosSquare middleSquare = null;

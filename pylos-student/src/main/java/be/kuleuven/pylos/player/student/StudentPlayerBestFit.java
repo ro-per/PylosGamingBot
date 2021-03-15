@@ -1,6 +1,9 @@
 package be.kuleuven.pylos.player.student;
 
-import be.kuleuven.pylos.game.*;
+import be.kuleuven.pylos.game.PylosBoard;
+import be.kuleuven.pylos.game.PylosGameIF;
+import be.kuleuven.pylos.game.PylosLocation;
+import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.student.SearchFactory.SearchLocation;
 import be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory;
@@ -39,13 +42,10 @@ public class StudentPlayerBestFit extends PylosPlayer {
             if (pl != null) {
                 String id = sl.getIdentifier();
                 counters.put(id, counters.get(id) + 1);
-                //toLocation = pl;
                 list.add(pl);
-                //break;
             }
         }
         toLocation = list.get(0);
-
 
 
         System.out.println("Location option list" + sb.toString());
@@ -55,7 +55,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
         for (Map.Entry<String, Integer> entry : counters.entrySet()) {
             sb2.append(entry.getKey()).append(" ").append(entry.getValue()).append("\t \t");
         }
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-* counters \t" + sb2.toString());
+        //System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-* counters \t" + sb2.toString());
 
         performMove(game, board);
     }

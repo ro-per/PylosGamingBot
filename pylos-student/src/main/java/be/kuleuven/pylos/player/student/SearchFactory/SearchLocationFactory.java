@@ -1,6 +1,8 @@
 package be.kuleuven.pylos.player.student.SearchFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class SearchLocationFactory {
 
@@ -18,7 +20,7 @@ public class SearchLocationFactory {
         searchLocationList.add(new SearchLocationE()); //SEARCH FOR SQUARE REPRESENTED MOST : put there
 
         searchLocationList.add(new SearchLocationC1()); //C1. MIDDLE SPHERE IS OWN COLOR : try put on middle of border
-        //searchLocationList.add(new SearchLocationC21()); // C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
+        searchLocationList.add(new SearchLocationC21()); // C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
         searchLocationList.add(new SearchLocationC22());
 
 

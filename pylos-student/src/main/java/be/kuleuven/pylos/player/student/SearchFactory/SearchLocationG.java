@@ -21,7 +21,7 @@ public class SearchLocationG extends SearchLocation {
 
         list.removeIf(pl -> !pl.isUsable());
 
-        list.sort(Comparator.comparingInt(pl->pl.Z));
+        list.sort(Comparator.comparingInt(pl -> pl.Z));
 
         return null;
     }
