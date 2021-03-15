@@ -11,8 +11,8 @@ import java.util.List;
 import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.FACTORY_RANDOM;
 
 public class SearchLocationF extends SearchLocation {
-    public SearchLocationF(String identifier) {
-        super(identifier);
+    public SearchLocationF() {
+        super("F");
     }
 
     @Override

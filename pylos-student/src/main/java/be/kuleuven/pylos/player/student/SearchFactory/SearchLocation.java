@@ -10,32 +10,38 @@ import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFacto
 public abstract class SearchLocation {
     /*
     A. Check for 3/4 Square
-        A1. 3/4 own color                           : put fourth
+        x A1. 3/4 own color                           : put fourth
         A2. 3/4 other color
-            A22. 1/4 empty                          : put forth (if not middle)
+            x A22. 1/4 empty                          : put forth (if not middle)
             A21. 1/4 own color                      : put on top
 
     B. CHECK IF MIDDLE 4/4                          : put on top
     C. L1 MIDDLE IS TAKEN
-        C1. MIDDLE SPHERE IS OWN COLOR              : try put on middle of border
+        x C1. MIDDLE SPHERE IS OWN COLOR              : try put on middle of border
         C2. MIDDLE SPHERE IS OTHER COLOR
-            C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
+            x C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
             C22. NO/ MULTIPLE BLACK SPHERES ON L2   : try put on middle of border
     D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED  : put in middle square
 
-    E. SEARCH FOR SQUARE REPRESENTED MOST           : put there
+    E. x SEARCH FOR SQUARE REPRESENTED MOST           : put there
     F. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
     G. PUTS AS HIGH AS POSSIBLE
     */
 
     private final String identifier;
+    public int counter;
 
     public SearchLocation(String identifier) {
         this.identifier = identifier;
+        this.counter = 0;
     }
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 
     public abstract PylosLocation getLocation(PylosBoard board, PylosPlayer pp);

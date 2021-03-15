@@ -6,8 +6,8 @@ import be.kuleuven.pylos.player.PylosPlayer;
 
 public class SearchLocationB extends SearchLocation {
 
-    public SearchLocationB(String identifier) {
-        super(identifier);
+    public SearchLocationB() {
+        super("B");
     }
 
     @Override

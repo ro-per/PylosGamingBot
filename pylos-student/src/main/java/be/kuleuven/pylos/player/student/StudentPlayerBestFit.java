@@ -2,6 +2,7 @@ package be.kuleuven.pylos.player.student;
 
 import be.kuleuven.pylos.game.*;
 import be.kuleuven.pylos.player.PylosPlayer;
+import be.kuleuven.pylos.player.student.SearchFactory.SearchLocation;
 import be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory;
 
 import java.util.*;
@@ -12,68 +13,42 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     private PylosLocation toLocation;
     private PylosSphere sphereToUse;
+    private Map<String, Integer> counters = initCounters();
+
+    private Map<String, Integer> initCounters() {
+        Map<String, Integer> counters = new HashMap<>();
+        for (SearchLocation sl : searchLocationFactory.getSearchLocationList()) {
+            counters.put(sl.getIdentifier(), 0);
+        }
+        return counters;
+    }
 
     /* ----------------------------------------- DO MOVE -----------------------------------------*/
 
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
-        final List<PylosLocation> options = new ArrayList<>();
-        int count = 0;
         StringBuilder sb = new StringBuilder();
 
-        /* ------------------------- DO NOT TOUCH BELOW ---------------------------------- */
-        options.add(searchLocationFactory.getLocation("A22").getLocation(board, this));
-        if (options.get(count) != null) sb.append("A22");
-        count++;
+        for (SearchLocation sl : searchLocationFactory.getSearchLocationList()) {
+            sb.append(sl.getIdentifier()).append("_");
+            PylosLocation pl = sl.getLocation(board, this);
+            if (pl != null) {
+                String id = sl.getIdentifier();
+                counters.put(id, counters.get(id) + 1);
+                toLocation = pl;
+                break;
+            }
+        }
 
-        options.add(searchLocationFactory.getLocation("A21").getLocation(board, this));
-        if (options.get(count) != null) sb.append("A21");
-        count++;
-
-        options.add(searchLocationFactory.getLocation("A1").getLocation(board, this));
-        if (options.get(count) != null) sb.append("A1");
-        count++;
-        /* ------------------------- DO NOT TOUCH ABOVE ---------------------------------- */
-
-        options.add(searchLocationFactory.getLocation("E").getLocation(board, this));
-        if (options.get(count) != null) sb.append("E");
-        count++;
+        System.out.println("Location option list" + sb.toString());
 
 
-        options.add(searchLocationFactory.getLocation("B").getLocation(board, this));
-        if (options.get(count) != null) sb.append("B");
-        count++;
+        StringBuilder sb2 = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : counters.entrySet()) {
+            sb2.append(entry.getKey()).append(" ").append(entry.getValue()).append("\t \t");
+        }
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-* counters \t" + sb2.toString());
 
-        options.add(searchLocationFactory.getLocation("C1").getLocation(board, this));
-        if (options.get(count) != null) sb.append("C1");
-        count++;
-
-        options.add(searchLocationFactory.getLocation("C21").getLocation(board, this));
-        if (options.get(count) != null) sb.append("C21");
-        count++;
-
-        options.add(searchLocationFactory.getLocation("C22").getLocation(board, this));
-        if (options.get(count) != null) sb.append("C22");
-        count++;
-
-        options.add(searchLocationFactory.getLocation("D").getLocation(board, this));
-        if (options.get(count) != null) sb.append("D");
-        count++;
-
-        options.add(searchLocationFactory.getLocation("G").getLocation(board, this));
-        if (options.get(count) != null) sb.append("G");
-        count++;
-
-        options.add(searchLocationFactory.getLocation("F").getLocation(board, this));
-        if (options.get(count) != null) sb.append("F");
-        count++;
-
-        options.removeIf(Objects::isNull);
-
-        if (options.isEmpty()) System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
-
-
-        toLocation = options.get(0);
         performMove(game, board);
     }
 
@@ -94,15 +69,11 @@ public class StudentPlayerBestFit extends PylosPlayer {
     }
 
     private void searchSphereToUse(PylosBoard board) {
-
-        // MAKE LIST OF MOVABLE SPHERES ON THE BOARD
-        PylosSphere tempSphere = null;
-
+        // LIST OF SPHERES
         List<PylosSphere> sphereList = new ArrayList<>(30);
         Collections.addAll(sphereList, board.getSpheres(this));
         sphereList.removeIf(PylosSphere::isReserve);
-        //System.out.println("++++"+sphereList.size());
-
+        // LIST OF LOCATIONS
         List<PylosLocation> locationList = new ArrayList<>(30);
         Collections.addAll(locationList, board.getLocations());
         locationList.removeIf(pl -> !pl.isUsable());
@@ -112,7 +83,6 @@ public class StudentPlayerBestFit extends PylosPlayer {
                 if (ps.canMoveTo(pl)) {
                     toLocation = pl;
                     sphereToUse = ps;
-                    System.out.println("+++++++++++++++++++++++++++");
                     return;
                 }
             }
@@ -139,11 +109,12 @@ public class StudentPlayerBestFit extends PylosPlayer {
         possibleSpheresToRemove.removeIf(ps -> !ps.canRemove());
         //4. Check if a sphere can be removed
         if (!possibleSpheresToRemove.isEmpty()) {
-            PylosSphere sphereToRemove;
-            double lastFrequency = 0.0; //TODO
+            PylosSphere sphereToRemove = doRemoveRandom(possibleSpheresToRemove);
+
+            /*double lastFrequency = 0.0;
             if (PYLOS_PLAYER_RANDOM.nextDouble() <= lastFrequency)
                 sphereToRemove = doRemoveLast(possibleSpheresToRemove);
-            else sphereToRemove = doRemoveRandom(possibleSpheresToRemove);
+            else sphereToRemove = doRemoveRandom(possibleSpheresToRemove);*/
 
             game.removeSphere(sphereToRemove);
         }
@@ -160,6 +131,17 @@ public class StudentPlayerBestFit extends PylosPlayer {
     private PylosSphere doRemoveLast(ArrayList<PylosSphere> possibleSpheresToRemove) {
         Collections.reverse(possibleSpheresToRemove);
         return possibleSpheresToRemove.get(0); // Take last
+    }
+
+    /**
+     * Calculates the sphere which is in a square in which you are represented the least
+     *
+     * @param possibleSpheresToRemove
+     * @return
+     */
+    private PylosSphere doRemoveSmart(ArrayList<PylosSphere> possibleSpheresToRemove) {
+        PylosSphere sphere = Collections.max(possibleSpheresToRemove, Comparator.comparingInt(o -> o.getLocation().getMaxInSquare(this)));
+        return sphere;
     }
 
     /**

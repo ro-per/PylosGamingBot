@@ -5,8 +5,8 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
 public class SearchLocationC22 extends SearchLocation {
-    public SearchLocationC22(String identifier) {
-        super(identifier);
+    public SearchLocationC22() {
+        super("C22");
     }
 
     @Override

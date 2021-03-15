@@ -11,8 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SearchLocationE extends SearchLocation {
-    public SearchLocationE(String identifier) {
-        super(identifier);
+    public SearchLocationE() {
+        super("E");
     }
 
     @Override

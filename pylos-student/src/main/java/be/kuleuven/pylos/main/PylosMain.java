@@ -13,10 +13,13 @@ import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
 import be.kuleuven.pylos.player.student.StudentPlayerBestFit2;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PylosMain {
     private final Random R = new Random(-1); //TODO SEED PYLOS
+    public static List<Integer> RESULTS = new ArrayList<>();
 
     public PylosMain() {
     }
@@ -34,6 +37,7 @@ public class PylosMain {
 
     public static void main(String[] args) throws Exception {
         /* !!! vm argument !!! -ea */
+        //PylosPlayer player1 = new PylosPlayerMiniMax(2);
         PylosPlayer player1 = new PylosPlayerBestFit();
         PylosPlayer player2 = new StudentPlayerBestFit();
 

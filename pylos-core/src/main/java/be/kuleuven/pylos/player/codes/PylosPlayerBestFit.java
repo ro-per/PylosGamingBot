@@ -152,12 +152,7 @@ public class PylosPlayerBestFit extends PylosPlayer {
 		/* if remove a sphere, remove the sphere with minimum in square
 		 * otherwise, pass */
 		if (!removableSpheres.isEmpty()) {
-			PylosSphere sphere = Collections.min(removableSpheres, new Comparator<PylosSphere>() {
-				@Override
-				public int compare(PylosSphere o1, PylosSphere o2) {
-					return Integer.compare(o1.getLocation().getMaxInSquare(PylosPlayerBestFit.this), o2.getLocation().getMaxInSquare(PylosPlayerBestFit.this));
-				}
-			});
+			PylosSphere sphere = Collections.min(removableSpheres, Comparator.comparingInt(o -> o.getLocation().getMaxInSquare(PylosPlayerBestFit.this)));
 			game.removeSphere(sphere);
 		} else {
 			game.pass();
