@@ -102,8 +102,6 @@ public class PylosGame implements PylosGameIF {
                 }
             }
         }
-        System.out.println("Sphere " + pylosSphere.PLAYER_COLOR.toString() + " moved to " + toLocation.X + " " + toLocation.Y + " " + toLocation.Z); //TODO
-
     }
 
     @Override
