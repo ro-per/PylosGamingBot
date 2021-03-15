@@ -8,7 +8,6 @@ import java.util.*;
 import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.*;
 
 public abstract class SearchLocation {
-
     /*
     A. Check for 3/4 Square
         A1. 3/4 own color                           : put fourth
@@ -26,8 +25,8 @@ public abstract class SearchLocation {
 
     E. SEARCH FOR SQUARE REPRESENTED MOST           : put there
     F. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
+    G. PUTS AS HIGH AS POSSIBLE
     */
-
     public SearchLocation() {
     }
 

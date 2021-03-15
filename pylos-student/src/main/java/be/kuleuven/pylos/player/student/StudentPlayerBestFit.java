@@ -18,8 +18,9 @@ public class StudentPlayerBestFit extends PylosPlayer {
     @Override
     public void doMove(PylosGameIF game, PylosBoard board) {
         final List<PylosLocation> options = new ArrayList<>();
-
         int count = 0;
+
+        /* ------------------------- DO NOT TOUCH BELOW ---------------------------------- */
         options.add(searchLocationFactory.getCheckFunction("A22").getLocation(board, this));
         if (options.get(count) != null) System.out.println("A22");
         count++;
@@ -31,10 +32,9 @@ public class StudentPlayerBestFit extends PylosPlayer {
         options.add(searchLocationFactory.getCheckFunction("A1").getLocation(board, this));
         if (options.get(count) != null) System.out.println("A1");
         count++;
+        /* ------------------------- DO NOT TOUCH ABOVE ---------------------------------- */
 
-        options.add(searchLocationFactory.getCheckFunction("G").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("G");
-        count++;
+
 
         options.add(searchLocationFactory.getCheckFunction("B").getLocation(board, this));
         if (options.get(count) != null) System.out.println("B");
@@ -58,6 +58,10 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
         options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
         if (options.get(count) != null) System.out.println("E");
+        count++;
+
+        options.add(searchLocationFactory.getCheckFunction("G").getLocation(board, this));
+        if (options.get(count) != null) System.out.println("G");
         count++;
 
         options.add(searchLocationFactory.getCheckFunction("F").getLocation(board, this));
@@ -85,8 +89,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
         lastPylosSpheres.add(toLocation.getSphere());
         searchSphereToUse(board);
         assert toLocation.isUsable();
-        System.out.println("sphereToUse"+sphereToUse);
-        System.out.println("toLocation"+toLocation);
+        System.out.println("sphereToUse" + sphereToUse);
+        System.out.println("toLocation" + toLocation);
 
         game.moveSphere(sphereToUse, toLocation);
     }
@@ -105,9 +109,9 @@ public class StudentPlayerBestFit extends PylosPlayer {
         Collections.addAll(locationList, board.getLocations());
         locationList.removeIf(pl -> !pl.isUsable());
 
-        for(PylosSphere ps: sphereList){
-            for(PylosLocation pl:locationList){
-                if(ps.canMoveTo(pl)){
+        for (PylosSphere ps : sphereList) {
+            for (PylosLocation pl : locationList) {
+                if (ps.canMoveTo(pl)) {
                     toLocation = pl;
                     sphereToUse = ps;
                     System.out.println("+++++++++++++++++++++++++++");
