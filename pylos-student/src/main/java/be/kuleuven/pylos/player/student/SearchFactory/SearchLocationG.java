@@ -9,7 +9,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SearchG extends SearchLocation {
+public class SearchLocationG extends SearchLocation {
+    public SearchLocationG(String identifier) {
+        super(identifier);
+    }
+
     @Override
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         List<PylosLocation> list = new ArrayList<>(30);

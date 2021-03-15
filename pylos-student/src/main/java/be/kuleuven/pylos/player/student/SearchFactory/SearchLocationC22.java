@@ -4,18 +4,15 @@ import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
-public class SearchB extends SearchLocation {
-
-    public SearchB() {
-        super();
+public class SearchLocationC22 extends SearchLocation {
+    public SearchLocationC22(String identifier) {
+        super(identifier);
     }
 
     @Override
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         PylosLocation l1MiddleLocation = board.getBoardLocation(1, 1, 1);
-        if (getMiddleSquareFillCount(board) == 4 && l1MiddleLocation.isUsable()) {
-            return l1MiddleLocation;
-        }
+        if (l1MiddleLocation.isUsed()) return getC1Location(board);
         return null;
     }
 }

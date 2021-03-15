@@ -7,9 +7,9 @@ import be.kuleuven.pylos.player.PylosPlayer;
 
 import java.util.List;
 
-public class SearchA1 extends SearchLocation {
-    public SearchA1() {
-        super();
+public class SearchLocationA1 extends SearchLocation {
+    public SearchLocationA1(String identifier) {
+        super(identifier);
     }
 
     @Override

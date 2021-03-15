@@ -10,9 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SearchE extends SearchLocation {
-    public SearchE() {
-        super();
+public class SearchLocationE extends SearchLocation {
+    public SearchLocationE(String identifier) {
+        super(identifier);
     }
 
     @Override

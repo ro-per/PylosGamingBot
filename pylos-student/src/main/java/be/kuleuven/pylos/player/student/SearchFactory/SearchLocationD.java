@@ -4,9 +4,9 @@ import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.player.PylosPlayer;
 
-public class SearchD extends SearchLocation {
-    public SearchD() {
-        super();
+public class SearchLocationD extends SearchLocation {
+    public SearchLocationD(String identifier) {
+        super(identifier);
     }
 
     @Override

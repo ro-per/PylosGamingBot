@@ -10,7 +10,11 @@ import java.util.List;
 
 import static be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory.FACTORY_RANDOM;
 
-public class SearchF extends SearchLocation {
+public class SearchLocationF extends SearchLocation {
+    public SearchLocationF(String identifier) {
+        super(identifier);
+    }
+
     @Override
     public PylosLocation getLocation(PylosBoard board, PylosPlayer pp) {
         //1. Init arraylist

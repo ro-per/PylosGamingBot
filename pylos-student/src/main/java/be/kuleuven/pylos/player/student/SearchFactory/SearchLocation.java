@@ -27,7 +27,15 @@ public abstract class SearchLocation {
     F. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
     G. PUTS AS HIGH AS POSSIBLE
     */
-    public SearchLocation() {
+
+    private final String identifier;
+
+    public SearchLocation(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     public abstract PylosLocation getLocation(PylosBoard board, PylosPlayer pp);

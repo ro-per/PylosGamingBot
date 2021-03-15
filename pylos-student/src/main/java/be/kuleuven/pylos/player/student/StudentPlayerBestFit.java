@@ -19,63 +19,59 @@ public class StudentPlayerBestFit extends PylosPlayer {
     public void doMove(PylosGameIF game, PylosBoard board) {
         final List<PylosLocation> options = new ArrayList<>();
         int count = 0;
+        StringBuilder sb = new StringBuilder();
 
         /* ------------------------- DO NOT TOUCH BELOW ---------------------------------- */
-        options.add(searchLocationFactory.getCheckFunction("A22").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("A22");
+        options.add(searchLocationFactory.getLocation("A22").getLocation(board, this));
+        if (options.get(count) != null) sb.append("A22");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("A21").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("A21");
+        options.add(searchLocationFactory.getLocation("A21").getLocation(board, this));
+        if (options.get(count) != null) sb.append("A21");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("A1").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("A1");
+        options.add(searchLocationFactory.getLocation("A1").getLocation(board, this));
+        if (options.get(count) != null) sb.append("A1");
         count++;
         /* ------------------------- DO NOT TOUCH ABOVE ---------------------------------- */
 
-        options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("E");
+        options.add(searchLocationFactory.getLocation("E").getLocation(board, this));
+        if (options.get(count) != null) sb.append("E");
         count++;
 
 
-
-        options.add(searchLocationFactory.getCheckFunction("B").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("B");
+        options.add(searchLocationFactory.getLocation("B").getLocation(board, this));
+        if (options.get(count) != null) sb.append("B");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("C1").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("C1");
+        options.add(searchLocationFactory.getLocation("C1").getLocation(board, this));
+        if (options.get(count) != null) sb.append("C1");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("C21").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("C21");
+        options.add(searchLocationFactory.getLocation("C21").getLocation(board, this));
+        if (options.get(count) != null) sb.append("C21");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("C22").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("C22");
+        options.add(searchLocationFactory.getLocation("C22").getLocation(board, this));
+        if (options.get(count) != null) sb.append("C22");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("D").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("D");
+        options.add(searchLocationFactory.getLocation("D").getLocation(board, this));
+        if (options.get(count) != null) sb.append("D");
         count++;
 
-
-
-        options.add(searchLocationFactory.getCheckFunction("G").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("G");
+        options.add(searchLocationFactory.getLocation("G").getLocation(board, this));
+        if (options.get(count) != null) sb.append("G");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("F").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("F");
+        options.add(searchLocationFactory.getLocation("F").getLocation(board, this));
+        if (options.get(count) != null) sb.append("F");
         count++;
 
         options.removeIf(Objects::isNull);
 
+        if (options.isEmpty()) System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
 
-        if (options.isEmpty()) {
-            System.out.println("Geen vrije plaatsen gevonden, andere speler wint");
-        }
 
         toLocation = options.get(0);
         performMove(game, board);
