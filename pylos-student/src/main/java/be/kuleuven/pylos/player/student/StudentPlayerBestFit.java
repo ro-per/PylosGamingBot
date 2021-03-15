@@ -34,6 +34,10 @@ public class StudentPlayerBestFit extends PylosPlayer {
         count++;
         /* ------------------------- DO NOT TOUCH ABOVE ---------------------------------- */
 
+        options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
+        if (options.get(count) != null) System.out.println("E");
+        count++;
+
 
 
         options.add(searchLocationFactory.getCheckFunction("B").getLocation(board, this));
@@ -56,9 +60,7 @@ public class StudentPlayerBestFit extends PylosPlayer {
         if (options.get(count) != null) System.out.println("D");
         count++;
 
-        options.add(searchLocationFactory.getCheckFunction("E").getLocation(board, this));
-        if (options.get(count) != null) System.out.println("E");
-        count++;
+
 
         options.add(searchLocationFactory.getCheckFunction("G").getLocation(board, this));
         if (options.get(count) != null) System.out.println("G");
