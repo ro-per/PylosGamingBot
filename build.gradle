@@ -23,6 +23,8 @@ project(':pylos-core') {
     dependencies {
         compile files('../lib/commons-math3-3.0.jar')
         compile files('../lib/encog-core-3.3.0.jar')
+        implementation 'com.github.cliftonlabs:json-simple:3.1.0'
+
     }
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier += 'sources'
@@ -40,6 +42,8 @@ project(':pylos-core') {
 project(':pylos-student') {
     dependencies {
         compile project(':pylos-core')
+        implementation 'com.github.cliftonlabs:json-simple:3.1.0'
+
     }
 //	jar {
 //		manifest {

@@ -8,6 +8,7 @@ import be.kuleuven.pylos.player.PylosPlayer;
 import java.util.List;
 import java.util.Random;
 
+
 /**
  * Created by Jan on 19/02/2015.
  */
@@ -23,12 +24,12 @@ public class Battle {
      * @return
      * @throws Exception
      */
-    public static double[] play(PylosPlayer playerLight, PylosPlayer playerDark, int runs) throws Exception {
+    public static BattleResults play(PylosPlayer playerLight, PylosPlayer playerDark, int runs) throws Exception {
         return play(playerLight, playerDark, runs, true);
     }
 
-    public static double[] play(PylosPlayer playerLight, PylosPlayer playerDark, int runs, boolean print) throws Exception {
-
+    public static BattleResults play(PylosPlayer playerLight, PylosPlayer playerDark, int runs, boolean print) throws Exception {
+        BattleResults battleResults = null;
         if (runs % 2 != 0) {
             throw new IllegalArgumentException("Please specify an even number of runs");
         }
@@ -101,7 +102,17 @@ public class Battle {
             sb.append("darkStart & DarkWin:\t").append(String.format("%.2f", (double) darkStartDarkWin / (runs / 2) * 100)).append("\n");
             sb.append("total DarkWin:\t \t").append(String.format("%.2f", totalWins)).append("\n");
 
-            if(totalWins>91.0) System.out.println(sb.toString());
+            if (totalWins > 91.0) System.out.println(sb.toString());
+
+
+            double tlw = (double) totalLightWin / runs * 100;
+            double tdw = (double) totalDarkWin / runs * 100;
+            double td = (double) totalDraw / runs * 100;
+            double time = totalPlayTime;
+
+            battleResults = new BattleResults(runs, tlw, tdw, td, time);
+
+
 
             /*System.out.println("");
             System.out.println("----------------------------");
@@ -125,7 +136,7 @@ public class Battle {
         }
 
         double[] wins = new double[]{(double) (totalLightWin) / runs, (double) (totalDarkWin) / runs, (double) (totalDraw) / runs};
-        return wins;
+        return battleResults;
     }
 
 }

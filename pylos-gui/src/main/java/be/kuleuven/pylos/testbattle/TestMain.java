@@ -22,8 +22,8 @@ public class TestMain {
 
 		for(PylosPlayer codes : players){
 			PylosPlayer student = new StudentPlayerBestFit();
-			int wins = (int)(Battle.play(student, codes, 100, false)[0] * 100);
-			System.out.println(wins);
+			//int wins = (int)(Battle.play(student, codes, 100, false)[0] * 100);
+			//System.out.println(wins);
 		}
 
 	}

@@ -1,6 +1,7 @@
 package be.kuleuven.pylos.main;
 
 import be.kuleuven.pylos.battle.Battle;
+import be.kuleuven.pylos.battle.BattleResults;
 import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosGame;
 import be.kuleuven.pylos.game.PylosGameObserver;
@@ -46,12 +47,15 @@ public class PylosMain {
 
         System.out.println();
 
+        List<BattleResults> battleResultsList = new ArrayList<>();
 
         for (List permutation : Permutation.getPermutations(list)) {
             order_core = permutation;
-            Battle.play(player1, player2, battleCount);
+            BattleResults brs = Battle.play(player1, player2, battleCount);
+            battleResultsList.add(brs);
         }
 
+        System.out.println(battleResultsList.size());
 
     }
 
