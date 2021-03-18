@@ -53,7 +53,7 @@ public class SearchLocationFactory {
 //            if (id.equals("A1")) list.add(sl);
 //            if (id.equals("A21")) list.add(sl);
 //            if (id.equals("A22")) list.add(sl);
-            if (id.equals("B")) list.add(sl);
+//            if (id.equals("B")) list.add(sl);
             if (id.equals("C1")) list.add(sl);
             if (id.equals("C21")) list.add(sl);
             if (id.equals("C22")) list.add(sl);

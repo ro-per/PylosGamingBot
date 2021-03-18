@@ -95,24 +95,14 @@ public class Battle {
         int totalDraw = lightStartDraw + darkStartDraw;
 
         if (print) {
-            StringBuilder sb = new StringBuilder();
-            double totalWins = (double) totalDarkWin / runs * 100;
-            sb.append(order_core).append("\n");
-            sb.append("lightStart & DarkWin:\t").append(String.format("%.2f", (double) lightStartDarkWin / (runs / 2) * 100)).append("\n");
-            sb.append("darkStart & DarkWin:\t").append(String.format("%.2f", (double) darkStartDarkWin / (runs / 2) * 100)).append("\n");
-            sb.append("total DarkWin:\t \t").append(String.format("%.2f", totalWins)).append("\n");
-
-            if (totalWins > 91.0) System.out.println(sb.toString());
-
-
             double tlw = (double) totalLightWin / runs * 100;
             double tdw = (double) totalDarkWin / runs * 100;
             double td = (double) totalDraw / runs * 100;
-            double time = totalPlayTime;
+            StringBuilder sb = new StringBuilder();
+            for(String s: order_core) sb.append(s);
 
-            battleResults = new BattleResults(runs, tlw, tdw, td, time);
-
-
+            //if (tdw > 91.0)
+            battleResults = new BattleResults(sb.toString(),runs, tlw, tdw, td, totalPlayTime);
 
             /*System.out.println("");
             System.out.println("----------------------------");

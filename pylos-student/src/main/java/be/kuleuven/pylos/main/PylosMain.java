@@ -9,7 +9,11 @@ import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.PylosPlayerObserver;
 import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
 import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
+import com.github.cliftonlabs.json_simple.Jsoner;
 
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,7 +39,7 @@ public class PylosMain {
         list.add("A1");
         list.add("A21");
         list.add("A22");
-//        list.add("B");
+        list.add("B");
 //        list.add("C1");
 //        list.add("C21");
 //        list.add("C22");
@@ -56,6 +60,19 @@ public class PylosMain {
         }
 
         System.out.println(battleResultsList.size());
+
+        try {
+            // create a writer
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get("battleResultsList.json"));
+            // convert books list to JSON and write to books.json
+            Jsoner.serialize(battleResultsList, writer);
+
+            // close the writer
+            writer.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
