@@ -9,6 +9,8 @@ import be.kuleuven.pylos.player.PylosPlayerObserver;
 import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
 import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PylosMain {
@@ -24,6 +26,9 @@ public class PylosMain {
     }
 
     public void startBattle(PylosPlayer player1, PylosPlayer player2, int battleCount) throws Exception {
+
+
+
         Battle.play(player1, player2, battleCount);
     }
 

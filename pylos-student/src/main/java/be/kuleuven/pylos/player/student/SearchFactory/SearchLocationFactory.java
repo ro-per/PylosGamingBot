@@ -19,6 +19,7 @@ public class SearchLocationFactory {
         searchLocationList.add(new SearchLocationA22()); //A22. 1/4 empty : put forth (if not middle)
         searchLocationList.add(new SearchLocationE()); //SEARCH FOR SQUARE REPRESENTED MOST : put there
 
+
         searchLocationList.add(new SearchLocationC1()); //C1. MIDDLE SPHERE IS OWN COLOR : try put on middle of border
         searchLocationList.add(new SearchLocationC21()); // C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
         searchLocationList.add(new SearchLocationC22());
