@@ -7,8 +7,11 @@ import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.student.SearchFactory.SearchLocation;
 import be.kuleuven.pylos.player.student.SearchFactory.SearchLocationFactory;
+import static be.kuleuven.pylos.battle.Battle.*;
 
 import java.util.*;
+
+import static be.kuleuven.pylos.main.PylosMain.*;
 
 public class StudentPlayerBestFit extends PylosPlayer {
     private final List<PylosSphere> lastPylosSpheres = new ArrayList<>(30);
@@ -20,6 +23,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
 
     private Map<String, Integer> initCounters() {
         Map<String, Integer> counters = new HashMap<>();
+
+
         for (SearchLocation sl : searchLocationFactory.getSearchLocationList()) {
             counters.put(sl.getIdentifier(), 0);
         }
@@ -36,19 +41,32 @@ public class StudentPlayerBestFit extends PylosPlayer {
         StringBuilder sb = new StringBuilder();
         List<PylosLocation> list = new ArrayList<>();
 
+        for (String s : order_core) {
+            SearchLocation sl = searchLocationFactory.getSearchLocation(s);
+
+            sb.append(sl.getIdentifier()).append("_");
+            PylosLocation pl = sl.getLocation(board, this);
+            if (pl != null) {
+                String id = sl.getIdentifier();
+                //counters.put(id, counters.get(id) + 1);
+                list.add(pl);
+            }
+        }
+
+
         for (SearchLocation sl : searchLocationFactory.getSearchLocationList()) {
             sb.append(sl.getIdentifier()).append("_");
             PylosLocation pl = sl.getLocation(board, this);
             if (pl != null) {
                 String id = sl.getIdentifier();
-                counters.put(id, counters.get(id) + 1);
+                //counters.put(id, counters.get(id) + 1);
                 list.add(pl);
             }
         }
         toLocation = list.get(0);
 
 
-        System.out.println("Location option list" + sb.toString());
+        //System.out.println("Location option list" + sb.toString());
 
 
         StringBuilder sb2 = new StringBuilder();
@@ -70,8 +88,8 @@ public class StudentPlayerBestFit extends PylosPlayer {
         lastPylosSpheres.add(toLocation.getSphere());
         searchSphereToUse(board);
         assert toLocation.isUsable();
-        System.out.println("sphereToUse" + sphereToUse);
-        System.out.println("toLocation" + toLocation);
+        //System.out.println("sphereToUse" + sphereToUse);
+        //System.out.println("toLocation" + toLocation);
 
         game.moveSphere(sphereToUse, toLocation);
     }

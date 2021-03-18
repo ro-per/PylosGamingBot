@@ -13,8 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static be.kuleuven.pylos.battle.Battle.*;
+
 public class PylosMain {
     private final Random R = new Random(); //TODO SEED PYLOS
+    public static List<String> order;
 
     public PylosMain() {
     }
@@ -27,9 +30,25 @@ public class PylosMain {
 
     public void startBattle(PylosPlayer player1, PylosPlayer player2, int battleCount) throws Exception {
 
+        List<Object> list = new ArrayList<>();
+        list.add("A1");
+        list.add("A22");
+        list.add("E");
+        list.add("C1");
+        list.add("C21");
+        list.add("C22");
+        list.add("A21");
 
 
-        Battle.play(player1, player2, battleCount);
+        System.out.println();
+
+
+        for (List permutation : Permutation.getPermutations(list)) {
+            order_core = permutation;
+            Battle.play(player1, player2, battleCount);
+        }
+
+
     }
 
     public static void main(String[] args) throws Exception {

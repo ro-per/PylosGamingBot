@@ -5,12 +5,14 @@ import be.kuleuven.pylos.game.PylosGame;
 import be.kuleuven.pylos.game.PylosGameState;
 import be.kuleuven.pylos.player.PylosPlayer;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  * Created by Jan on 19/02/2015.
  */
 public class Battle {
+    public static List<String> order_core;
 
     private static final Random random = new Random(0);
 
@@ -92,7 +94,16 @@ public class Battle {
         int totalDraw = lightStartDraw + darkStartDraw;
 
         if (print) {
-            System.out.println("");
+            StringBuilder sb = new StringBuilder();
+            double totalWins = (double) totalDarkWin / runs * 100;
+            sb.append(order_core).append("\n");
+            sb.append("lightStart & DarkWin:\t").append(String.format("%.2f", (double) lightStartDarkWin / (runs / 2) * 100)).append("\n");
+            sb.append("darkStart & DarkWin:\t").append(String.format("%.2f", (double) darkStartDarkWin / (runs / 2) * 100)).append("\n");
+            sb.append("total DarkWin:\t \t").append(String.format("%.2f", totalWins)).append("\n");
+
+            if(totalWins>91.0) System.out.println(sb.toString());
+
+            /*System.out.println("");
             System.out.println("----------------------------");
             System.out.println(runs / 2 + " games where " + playerLightClass + " starts:");
             System.out.println(String.format(" * %6s", String.format("%.2f", (double) lightStartLightWin / (runs / 2) * 100)) + "% " + playerLightClass);
@@ -110,7 +121,7 @@ public class Battle {
             System.out.println(String.format(" * %6s", String.format("%.2f", (double) totalDraw / runs * 100)) + "% Draw");
             System.out.println();
             System.out.println("Time: " + String.format("%.2f", totalPlayTime) + " sec (" + String.format("%.2f", totalPlayTime / runs) + " sec / game)");
-            System.out.println("----------------------------");
+            System.out.println("----------------------------");*/
         }
 
         double[] wins = new double[]{(double) (totalLightWin) / runs, (double) (totalDarkWin) / runs, (double) (totalDraw) / runs};

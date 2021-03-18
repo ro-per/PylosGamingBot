@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args) {
-        String order;
+        List<String> order;
 
         List<Object> list = new ArrayList<>();
         list.add("A1");
@@ -17,8 +17,11 @@ public class TestMain {
 
         System.out.println();
 
-        for(Object o: Permutation.getPermutations(list)){
-            System.out.println(o);
+
+        for (List permutation : Permutation.getPermutations(list)) {
+            order = permutation;
+            System.out.println(order);
+
         }
     }
 }

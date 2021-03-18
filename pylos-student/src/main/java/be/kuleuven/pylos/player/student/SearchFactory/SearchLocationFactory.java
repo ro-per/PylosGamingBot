@@ -15,6 +15,7 @@ public class SearchLocationFactory {
 
         searchLocationList = new ArrayList<>();
 
+
         searchLocationList.add(new SearchLocationA1()); //A1. 3/4 own color: put fourth
         searchLocationList.add(new SearchLocationA22()); //A22. 1/4 empty : put forth (if not middle)
         searchLocationList.add(new SearchLocationE()); //SEARCH FOR SQUARE REPRESENTED MOST : put there
@@ -24,8 +25,8 @@ public class SearchLocationFactory {
         searchLocationList.add(new SearchLocationC21()); // C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
         searchLocationList.add(new SearchLocationC22());
 
-
         searchLocationList.add(new SearchLocationA21());
+
         searchLocationList.add(new SearchLocationB());
         searchLocationList.add(new SearchLocationD());
         searchLocationList.add(new SearchLocationG());
@@ -45,7 +46,18 @@ public class SearchLocationFactory {
     }
 
     public List<SearchLocation> getSearchLocationList() {
-        return this.searchLocationList;
+        List<SearchLocation> list = new ArrayList<>();
+        for (SearchLocation sl : searchLocationList) {
+            String id = sl.getIdentifier();
+
+            /*if (!(id.equals("A1") || id.equals("A22") || id.equals("E")|| id.equals("C1")|| id.equals("G")|| id.equals("A21")))
+                list.add(sl);*/
+
+            if (false) list.add(sl);
+
+        }
+
+        return list;
     }
 
 }

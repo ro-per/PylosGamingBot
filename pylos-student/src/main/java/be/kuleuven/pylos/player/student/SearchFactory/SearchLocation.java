@@ -24,7 +24,7 @@ public abstract class SearchLocation {
         C2. MIDDLE SPHERE IS OTHER COLOR
             C21. ONE (OR MORE) BLACK SPHERES ON L2  : try to put on opposite side
             C22. NO/ MULTIPLE BLACK SPHERES ON L2   : try put on middle of border
-    D. CHECK IF L1 MIDDLE SQUARE IS NOT 3/4 FILLED  : put in middle square
+    D. CHECK IF L0 MIDDLE SQUARE IS NOT 3/4 FILLED  : put in middle square
 
     E. SEARCH FOR SQUARE REPRESENTED MOST           : put there
     F. IF NO MOVES COULD BE PERFORMED               : put random, same as random fit
