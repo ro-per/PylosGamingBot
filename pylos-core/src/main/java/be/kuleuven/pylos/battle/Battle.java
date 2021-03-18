@@ -101,7 +101,6 @@ public class Battle {
             StringBuilder sb = new StringBuilder();
             for(String s: order_core) sb.append(s);
 
-            //if (tdw > 91.0)
             battleResults = new BattleResults(sb.toString(),runs, tlw, tdw, td, totalPlayTime);
 
             /*System.out.println("");
@@ -128,5 +127,4 @@ public class Battle {
         double[] wins = new double[]{(double) (totalLightWin) / runs, (double) (totalDarkWin) / runs, (double) (totalDraw) / runs};
         return battleResults;
     }
-
 }

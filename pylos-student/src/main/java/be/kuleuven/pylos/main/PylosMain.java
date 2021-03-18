@@ -40,36 +40,24 @@ public class PylosMain {
         list.add("A21");
         list.add("A22");
         list.add("B");
-//        list.add("C1");
-//        list.add("C21");
-//        list.add("C22");
+        list.add("C1");
+        list.add("C21");
+        list.add("C22");
 //        list.add("D");
-//        list.add("E");
+        list.add("E");
 //        list.add("F");
-//        list.add("G");
-
-
-        System.out.println();
+        list.add("G");
 
         List<BattleResults> battleResultsList = new ArrayList<>();
-
         for (List permutation : Permutation.getPermutations(list)) {
             order_core = permutation;
             BattleResults brs = Battle.play(player1, player2, battleCount);
             battleResultsList.add(brs);
         }
-
-        System.out.println(battleResultsList.size());
-
         try {
-            // create a writer
             BufferedWriter writer = Files.newBufferedWriter(Paths.get("battleResultsList.json"));
-            // convert books list to JSON and write to books.json
             Jsoner.serialize(battleResultsList, writer);
-
-            // close the writer
             writer.close();
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
