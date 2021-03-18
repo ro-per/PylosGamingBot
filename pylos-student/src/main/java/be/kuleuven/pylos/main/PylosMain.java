@@ -41,7 +41,7 @@ public class PylosMain {
         list.add("A22");
         list.add("B");
         list.add("C1");
-        list.add("C21");
+//        list.add("C21");
         list.add("C22");
 //        list.add("D");
         list.add("E");
