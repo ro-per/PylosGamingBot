@@ -50,10 +50,17 @@ public class SearchLocationFactory {
         for (SearchLocation sl : searchLocationList) {
             String id = sl.getIdentifier();
 
-            /*if (!(id.equals("A1") || id.equals("A22") || id.equals("E")|| id.equals("C1")|| id.equals("G")|| id.equals("A21")))
-                list.add(sl);*/
-
-            if (false) list.add(sl);
+//            if (id.equals("A1")) list.add(sl);
+//            if (id.equals("A21")) list.add(sl);
+//            if (id.equals("A22")) list.add(sl);
+            if (id.equals("B")) list.add(sl);
+            if (id.equals("C1")) list.add(sl);
+            if (id.equals("C21")) list.add(sl);
+            if (id.equals("C22")) list.add(sl);
+            if (id.equals("D")) list.add(sl);
+            if (id.equals("E")) list.add(sl);
+            if (id.equals("F")) list.add(sl);
+            if (id.equals("G")) list.add(sl);
 
         }
 

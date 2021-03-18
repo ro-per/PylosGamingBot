@@ -32,12 +32,16 @@ public class PylosMain {
 
         List<Object> list = new ArrayList<>();
         list.add("A1");
-        list.add("A22");
-        list.add("E");
-        list.add("C1");
-        list.add("C21");
-        list.add("C22");
         list.add("A21");
+        list.add("A22");
+//        list.add("B");
+//        list.add("C1");
+//        list.add("C21");
+//        list.add("C22");
+//        list.add("D");
+//        list.add("E");
+//        list.add("F");
+//        list.add("G");
 
 
         System.out.println();
