@@ -13,7 +13,6 @@ import com.github.cliftonlabs.json_simple.Jsoner;
 
 import java.io.BufferedWriter;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static be.kuleuven.pylos.battle.Battle.*;
+import static be.kuleuven.pylos.battle.Battle.order_core;
 
 public class PylosMain {
     private final Random R = new Random(); //TODO SEED PYLOS
@@ -42,15 +41,15 @@ public class PylosMain {
         List<Object> list = new ArrayList<>();
         list.add("A1");
         list.add("A21");
-//        list.add("A22");
-//        list.add("B");
-//        list.add("C1");
-//        list.add("C21");
-//        list.add("C22");
+        list.add("A22");
+        list.add("B");
+        list.add("C1");
+        list.add("C21");
+        list.add("C22");
 //        list.add("D");
-//        list.add("E");
+        list.add("E");
 //        list.add("F");
-//        list.add("G");
+        list.add("G");
 
         List<BattleResults> battleResultsList = new ArrayList<>();
         for (List permutation : Permutation.getPermutations(list)) {
