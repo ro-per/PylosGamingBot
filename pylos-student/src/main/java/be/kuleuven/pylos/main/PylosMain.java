@@ -44,13 +44,13 @@ public class PylosMain {
         list.add("A21");
         list.add("A22");
         list.add("B");
-//        list.add("C1");
-//        list.add("C21");
-//        list.add("C22");
+        list.add("C1");
+        list.add("C21");
+        list.add("C22");
 //        list.add("D");
-//        list.add("E");
+        list.add("E");
 //        list.add("F");
-//        list.add("G");
+        list.add("G");
 
         List<BattleResults> battleResultsList = new ArrayList<>();
         for (List permutation : Permutation.getPermutations(list)) {
