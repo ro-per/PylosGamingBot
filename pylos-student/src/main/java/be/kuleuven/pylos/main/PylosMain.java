@@ -43,34 +43,42 @@ public class PylosMain {
         list.add("A21");
         list.add("A22");
         list.add("B");
+        list.add("E");
+        list.add("G");
         list.add("C1");
         list.add("C21");
         list.add("C22");
-        list.add("E");
-        list.add("G");
+
 
 //        list.add("D");
 //        list.add("F");
 
-
+        System.out.println("Start permutation -----------------------------------");
         List<BattleResults> battleResultsList = new ArrayList<>();
 
         for (List permutation : Permutation.getPermutations(list)) {
             order_core = permutation;
             BattleResults brs = Battle.play(player1, player2, battleCount);
 
-            if (brs.getRuns()!=0){
+            if (brs.getRuns() != 0) {
                 battleResultsList.add(brs);
-                System.out.println("Size "+battleResultsList.size());
+                writeAway(battleResultsList);
+                System.out.println("Size " + battleResultsList.size());
+                battleResultsList= new ArrayList<>();
             }
 
-            if (battleResultsList.size() >= 10) {
+           /* if (battleResultsList.size() >= 10) {
                 writeAway(battleResultsList);
+               *//* long memoryNow = Runtime.getRuntime().freeMemory();
+                System.gc();
+                long memoryLater = Runtime.getRuntime().freeMemory();
+                long diff = memoryLater - memoryNow;
+                System.out.println("mn: " + memoryNow + " ml: " + memoryLater+ " dif:"+diff);*//*
                 battleResultsList = new ArrayList<>();
-            }
+            }*/
         }
         writeAway(battleResultsList);
-
+        System.out.println("Stop permutation -----------------------------------");
     }
 
     private static boolean writeAway(List<BattleResults> battleResultsList) {
@@ -79,7 +87,7 @@ public class PylosMain {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(filename));
             Jsoner.serialize(battleResultsList, writer);
             writer.close();
-            System.out.println("Flushed to "+filename);
+            System.out.println("Flushed to " + filename);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
