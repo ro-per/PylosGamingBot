@@ -44,19 +44,46 @@ public class PylosMain {
         list.add("A22");
         list.add("B");
         list.add("C1");
-        list.add("C21");
-        list.add("C22");
-//        list.add("D");
-        list.add("E");
-//        list.add("F");
-        list.add("G");
+//        list.add("C21");
+//        list.add("C22");
+//        list.add("E");
+//        list.add("G");
 
-        List<BattleResults> battleResultsList = new ArrayList<>();
+//        list.add("D");
+//        list.add("F");
+
+
+        List<BattleResults> battleResultsList = new ArrayList<>(102);
+
         for (List permutation : Permutation.getPermutations(list)) {
             order_core = permutation;
             BattleResults brs = Battle.play(player1, player2, battleCount);
-            battleResultsList.add(brs);
+            if (brs != null) battleResultsList.add(brs);
+
+            if (battleResultsList.size() % 100 == 0) {
+                writeAway(battleResultsList);
+                battleResultsList = new ArrayList<>(102);
+            }
         }
+        writeAway(battleResultsList);
+
+    }
+
+    private static boolean writeAway(List<BattleResults> battleResultsList) {
+        try {
+            String filename = getFileName();
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(filename));
+            Jsoner.serialize(battleResultsList, writer);
+            writer.close();
+            System.out.println("Flushed to "+filename);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    private static String getFileName() {
         String nows = "now", hostname = "Unknown";
         try {
             // CURRENT DATE
@@ -69,13 +96,8 @@ public class PylosMain {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get("json/" + hostname + "_" + nows + "_battleResultsList.json"));
-            Jsoner.serialize(battleResultsList, writer);
-            writer.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+
+        return "json/" + hostname + "_" + nows + "_battleResultsList.json";
     }
 
     public static void main(String[] args) throws Exception {

@@ -99,9 +99,9 @@ public class Battle {
             double tdw = (double) totalDarkWin / runs * 100;
             double td = (double) totalDraw / runs * 100;
             StringBuilder sb = new StringBuilder();
-            for(String s: order_core) sb.append(s);
+            for (String s : order_core) sb.append(s);
 
-            battleResults = new BattleResults(sb.toString(),runs, tlw, tdw, td, totalPlayTime);
+            if (tdw > 93.0) battleResults = new BattleResults(sb.toString(), runs, tlw, tdw, td, totalPlayTime);
 
             /*System.out.println("");
             System.out.println("----------------------------");
