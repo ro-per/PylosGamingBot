@@ -29,7 +29,7 @@ public class Battle {
     }
 
     public static BattleResults play(PylosPlayer playerLight, PylosPlayer playerDark, int runs, boolean print) throws Exception {
-        BattleResults battleResults = null;
+        BattleResults battleResults = new BattleResults("order", 0, 0, 0, 0, 0);
         if (runs % 2 != 0) {
             throw new IllegalArgumentException("Please specify an even number of runs");
         }

@@ -36,6 +36,9 @@ public class BattleResults implements Jsonable {
         this.totalPlayTime = time;
     }
 
+    public int getRuns() {
+        return runs;
+    }
 
     @Override
     public String toJson() {

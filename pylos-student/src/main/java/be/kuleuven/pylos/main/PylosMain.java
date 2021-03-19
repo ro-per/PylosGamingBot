@@ -44,25 +44,29 @@ public class PylosMain {
         list.add("A22");
         list.add("B");
         list.add("C1");
-//        list.add("C21");
-//        list.add("C22");
-//        list.add("E");
-//        list.add("G");
+        list.add("C21");
+        list.add("C22");
+        list.add("E");
+        list.add("G");
 
 //        list.add("D");
 //        list.add("F");
 
 
-        List<BattleResults> battleResultsList = new ArrayList<>(102);
+        List<BattleResults> battleResultsList = new ArrayList<>();
 
         for (List permutation : Permutation.getPermutations(list)) {
             order_core = permutation;
             BattleResults brs = Battle.play(player1, player2, battleCount);
-            if (brs != null) battleResultsList.add(brs);
 
-            if (battleResultsList.size() % 100 == 0) {
+            if (brs.getRuns()!=0){
+                battleResultsList.add(brs);
+                System.out.println("Size "+battleResultsList.size());
+            }
+
+            if (battleResultsList.size() >= 10) {
                 writeAway(battleResultsList);
-                battleResultsList = new ArrayList<>(102);
+                battleResultsList = new ArrayList<>();
             }
         }
         writeAway(battleResultsList);

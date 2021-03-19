@@ -55,10 +55,10 @@ public class SearchLocationFactory {
 //            if (id.equals("A22")) list.add(sl);
 //            if (id.equals("B")) list.add(sl);
 //            if (id.equals("C1")) list.add(sl);
-            if (id.equals("C21")) list.add(sl);
-            if (id.equals("C22")) list.add(sl);
-            if (id.equals("E")) list.add(sl);
-            if (id.equals("G")) list.add(sl);
+//            if (id.equals("C21")) list.add(sl);
+//            if (id.equals("C22")) list.add(sl);
+//            if (id.equals("E")) list.add(sl);
+//            if (id.equals("G")) list.add(sl);
 
             if (id.equals("D")) list.add(sl);
             if (id.equals("F")) list.add(sl);
