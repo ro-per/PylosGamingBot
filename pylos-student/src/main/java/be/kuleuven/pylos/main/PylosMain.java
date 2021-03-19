@@ -39,9 +39,9 @@ public class PylosMain {
     public void startBattle(PylosPlayer player1, PylosPlayer player2, int battleCount) throws Exception {
 
         List<Object> list = new ArrayList<>();
+        list.add("A1");
         list.add("E");
         list.add("G");
-        list.add("A1");
         list.add("A21");
         list.add("A22");
         list.add("B");
@@ -64,7 +64,7 @@ public class PylosMain {
                 battleResultsList.add(brs);
                 writeAway(battleResultsList);
                 System.out.println("Size " + battleResultsList.size());
-                battleResultsList= new ArrayList<>();
+                battleResultsList = new ArrayList<>();
             }
 
            /* if (battleResultsList.size() >= 10) {
@@ -109,7 +109,7 @@ public class PylosMain {
             ex.printStackTrace();
         }
 
-        return "json/"+"EGA1A21A22BC1C21C22"+"/" + hostname + "_" + nows + "_battleResultsList.json";
+        return "json/" + "A1EGA21A22BC1C21C22" + "/" + hostname + "_" + nows + "_battleResultsList.json";
     }
 
     public static void main(String[] args) throws Exception {
