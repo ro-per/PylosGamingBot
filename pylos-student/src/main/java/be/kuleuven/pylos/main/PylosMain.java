@@ -39,6 +39,8 @@ public class PylosMain {
     public void startBattle(PylosPlayer player1, PylosPlayer player2, int battleCount) throws Exception {
 
         List<Object> list = new ArrayList<>();
+        list.add("E");
+        list.add("G");
         list.add("A1");
         list.add("A21");
         list.add("A22");
@@ -46,8 +48,7 @@ public class PylosMain {
         list.add("C1");
         list.add("C21");
         list.add("C22");
-        list.add("E");
-        list.add("G");
+
 
 //        list.add("D");
 //        list.add("F");
@@ -108,7 +109,7 @@ public class PylosMain {
             ex.printStackTrace();
         }
 
-        return "json/"+order_core+"/" + hostname + "_" + nows + "_battleResultsList.json";
+        return "json/"+"EGA1A21A22BC1C21C22"+"/" + hostname + "_" + nows + "_battleResultsList.json";
     }
 
     public static void main(String[] args) throws Exception {
