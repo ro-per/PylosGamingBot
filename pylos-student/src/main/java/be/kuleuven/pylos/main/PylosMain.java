@@ -43,12 +43,11 @@ public class PylosMain {
         list.add("A21");
         list.add("A22");
         list.add("B");
-        list.add("E");
-        list.add("G");
         list.add("C1");
         list.add("C21");
         list.add("C22");
-
+        list.add("E");
+        list.add("G");
 
 //        list.add("D");
 //        list.add("F");
@@ -109,7 +108,7 @@ public class PylosMain {
             ex.printStackTrace();
         }
 
-        return "json/" + hostname + "_" + nows + "_battleResultsList.json";
+        return "json/"+order_core+"/" + hostname + "_" + nows + "_battleResultsList.json";
     }
 
     public static void main(String[] args) throws Exception {
