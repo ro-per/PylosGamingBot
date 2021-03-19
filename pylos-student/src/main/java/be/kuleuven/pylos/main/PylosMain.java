@@ -69,7 +69,7 @@ public class PylosMain {
             addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
 
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(hostname+"_"+nows+"_battleResultsList.json"));
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get("json/"+hostname+"_"+nows+"_battleResultsList.json"));
             Jsoner.serialize(battleResultsList, writer);
             writer.close();
         } catch (Exception ex) {
