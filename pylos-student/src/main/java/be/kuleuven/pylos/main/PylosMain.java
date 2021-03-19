@@ -42,15 +42,15 @@ public class PylosMain {
         List<Object> list = new ArrayList<>();
         list.add("A1");
         list.add("A21");
-        list.add("A22");
-        list.add("B");
-        list.add("C1");
-        list.add("C21");
-        list.add("C22");
+//        list.add("A22");
+//        list.add("B");
+//        list.add("C1");
+//        list.add("C21");
+//        list.add("C22");
 //        list.add("D");
-        list.add("E");
+//        list.add("E");
 //        list.add("F");
-        list.add("G");
+//        list.add("G");
 
         List<BattleResults> battleResultsList = new ArrayList<>();
         for (List permutation : Permutation.getPermutations(list)) {
@@ -58,18 +58,20 @@ public class PylosMain {
             BattleResults brs = Battle.play(player1, player2, battleCount);
             battleResultsList.add(brs);
         }
+        String nows = "now", hostname = "Unknown";
         try {
             // CURRENT DATE
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss");
             LocalDateTime now = LocalDateTime.now();
-            String nows=dtf.format(now);
+            nows = dtf.format(now);
             //HOSTNAME
-            String hostname = "Unknown";
-            InetAddress addr;
-            addr = InetAddress.getLocalHost();
+            InetAddress addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
-
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get("json/"+hostname+"_"+nows+"_battleResultsList.json"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get("json/" + hostname + "_" + nows + "_battleResultsList.json"));
             Jsoner.serialize(battleResultsList, writer);
             writer.close();
         } catch (Exception ex) {
