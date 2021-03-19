@@ -12,8 +12,12 @@ import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
 import com.github.cliftonlabs.json_simple.Jsoner;
 
 import java.io.BufferedWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,13 +44,13 @@ public class PylosMain {
         list.add("A21");
         list.add("A22");
         list.add("B");
-        list.add("C1");
+//        list.add("C1");
 //        list.add("C21");
-        list.add("C22");
+//        list.add("C22");
 //        list.add("D");
-        list.add("E");
+//        list.add("E");
 //        list.add("F");
-        list.add("G");
+//        list.add("G");
 
         List<BattleResults> battleResultsList = new ArrayList<>();
         for (List permutation : Permutation.getPermutations(list)) {
@@ -55,13 +59,22 @@ public class PylosMain {
             battleResultsList.add(brs);
         }
         try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get("battleResultsList.json"));
+            // CURRENT DATE
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss");
+            LocalDateTime now = LocalDateTime.now();
+            String nows=dtf.format(now);
+            //HOSTNAME
+            String hostname = "Unknown";
+            InetAddress addr;
+            addr = InetAddress.getLocalHost();
+            hostname = addr.getHostName();
+
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(hostname+"_"+nows+"_battleResultsList.json"));
             Jsoner.serialize(battleResultsList, writer);
             writer.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) throws Exception {
